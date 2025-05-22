@@ -5,6 +5,7 @@ import com.anirecs.AniRecs.database.entities.KitsuAnime;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -109,19 +110,14 @@ public class KitsuApiFullFetch {
             JsonNode posterURL = attributes.path("posterImage").path("small");
             JsonNode ageRating = attributes.path("ageRating");
             JsonNode showType = attributes.path("subtype");
-
-            // First title is the English one always (if it exists)
-            String animeTitle = "No title";
             JsonNode titlesNode = attributes.path("titles");
-            if (titlesNode.fields().hasNext()) {
-                animeTitle = titlesNode.fields().next().getValue().asText();
-            }
+
 
             KitsuAnime kitsuAnime = new KitsuAnime();
 
             kitsuAnime.setKitsuId(idNode.asInt());
             kitsuAnime.setMalId(getMalId(baseApi, idNode.asInt()));
-            kitsuAnime.setAnimeTitle(animeTitle);
+            kitsuAnime.setAnimeTitle(getAnimeTitle(titlesNode));
             kitsuAnime.setAverageRating(avgRatingNode.asDouble());
             kitsuAnime.setSynopsis(synopsis.asText());
             kitsuAnime.setEpisodeCount(episodeCount.asInt());
@@ -132,8 +128,8 @@ public class KitsuApiFullFetch {
             kitsuAnime.setShowType(showType.asText());
             boolean animeHasGenres = addGenresToAnime(baseApi, idNode.asInt(), kitsuAnime);
 
+            System.out.println("\u001B[32mFinished data for: " + getAnimeTitle(titlesNode) + " (" + idNode.asInt() + ")\u001B[0m");
             System.out.println();
-            System.out.println("\u001B[32mFinished data for: " + animeTitle + " (" + idNode.asInt() + ")\u001B[0m");
 
             // Only save if anime has genres
             if (animeHasGenres) {
@@ -158,7 +154,6 @@ public class KitsuApiFullFetch {
             JsonNode data = pathToData(jsonResponse);
 
             if (data.isNull() || data.isEmpty()) {
-                System.out.println("\u001B[31mNo MAL ID found\u001B[0m");
                 return -1;
             }
 
@@ -174,7 +169,6 @@ public class KitsuApiFullFetch {
             }
 
             // If malNode was not found
-            System.out.println("\u001B[31mMAL data is null (" + kitsuId + ")\u001B[0m");
             return -1;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -212,7 +206,11 @@ public class KitsuApiFullFetch {
                     kitsuAnimeService.saveGenre(genre);
                 }
 
-                kitsuAnime.addGenre(genre);
+                if (isValidAnime(kitsuAnime)) {
+                    kitsuAnime.addGenre(genre);
+                } else {
+                    return false;
+                }
             }
 
             return true;
@@ -225,5 +223,42 @@ public class KitsuApiFullFetch {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonRootNode = objectMapper.readTree(jsonResponse);
         return jsonRootNode.path("data");
+    }
+
+    private String getAnimeTitle(JsonNode titleNode) {
+        String animeTitle = "No title";
+
+        // Get the titles from fields and add it to a keys list
+        // e.g. "en": "Cowboy Bebop" will get "Cowboy Bebop"
+        List<String> titles = new ArrayList<>();
+        Iterator<Map.Entry<String, JsonNode>> iterator = titleNode.fields();
+        iterator.forEachRemaining(entry -> titles.add(entry.getValue().asText()));
+
+        for (String title : titles) {
+            if (title != null && !title.trim().isEmpty() && !title.equalsIgnoreCase("null")) {
+                return title;
+            }
+        }
+
+        return animeTitle;
+    }
+
+    private boolean isValidAnime(KitsuAnime kitsuAnime) {
+        if (kitsuAnime.getMalId() == -1) {
+            System.out.println("\u001B[31mAnime " + kitsuAnime.getKitsuId() + " is not a valid malId\u001B[0m");
+            return false;
+        }
+
+        if (Objects.equals(kitsuAnime.getAnimeTitle(), "No title")) {
+            System.out.println("\u001B[31m" + kitsuAnime.getKitsuId() + " is not a valid title\u001B[0m");
+            return false;
+        }
+
+        if (Objects.equals(kitsuAnime.getShowType(), "music")) {
+            System.out.println("\u001B[31m" + kitsuAnime.getKitsuId() + " is not a valid show_type\u001B[0m");
+            return false;
+        }
+
+        return true;
     }
 }
