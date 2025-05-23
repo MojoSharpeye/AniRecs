@@ -27,6 +27,10 @@ public class KitsuDatabaseUpdate {
         // Needs to offset it so that it doesn't go to next page which is empty
         lastPage -= 40;
 
+        if (lastPage < 0) {
+            lastPage = 0;
+        }
+
         lastPage = kitsuApiFullFetch.getAllData(lastPage);
 
         writePageToFile(lastPage);
