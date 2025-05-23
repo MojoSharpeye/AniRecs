@@ -5,7 +5,6 @@ import com.anirecs.AniRecs.database.entities.KitsuAnime;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,38 +20,40 @@ public class KitsuApiFullFetch {
         this.kitsuAnimeService = kitsuAnimeService;
     }
 
-    public void getAllData() {
+    public Integer getAllData(int currentPage) {
         String baseAPI = "https://kitsu.io/api/edge";
 
-        int curPage = 0;
+        int currPage = currentPage;
         boolean lastPage = false;
 
         // Loops through pages of (20) animes
         while (!lastPage) {
-            String urlString = baseAPI + "/anime?page[limit]=20&page[offset]=" + curPage;
+            String urlString = baseAPI + "/anime?page[limit]=20&page[offset]=" + currPage;
 
             try {
                 HttpURLConnection apiConnection = fetchApiResponse(urlString);
 
                 if (apiConnection.getResponseCode() != 200) {
-                    System.out.println("\u001B[31mCould not connect to API for page: " + curPage + "\u001B[0m");
-                    return;
+                    System.out.println("\u001B[31mCould not connect to API for page: " + currPage + "\u001B[0m");
+                    throw new Exception("Failed to fetch data from API");
                 }
 
                 String jsonResponse = readApiResponse(apiConnection);
 
                 lastPage = saveResponseToDatabase(baseAPI, jsonResponse);
 
-                curPage += 20;
+                currPage += 20;
 
                 System.out.println();
-                System.out.println("\u001B[32mPage: " + curPage + "\u001B[0m");
+                System.out.println("\u001B[32mPage: " + currPage + "\u001B[0m");
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             System.out.println("\u001B[32mDatabase is updated\u001B[0m");
         }
+
+        return currPage;
     }
 
     private static HttpURLConnection fetchApiResponse(String urlString) {
