@@ -35,7 +35,7 @@ public class KitsuApiFullFetch {
                 HttpURLConnection apiConnection = fetchApiResponse(urlString);
 
                 if (apiConnection.getResponseCode() != 200) {
-                    System.out.println("Error: Could not connect to API");
+                    System.out.println("\u001B[31mCould not connect to API for page: " + curPage + "\u001B[0m");
                     return;
                 }
 
@@ -50,6 +50,8 @@ public class KitsuApiFullFetch {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            System.out.println("\u001B[32mDatabase is updated\u001B[0m");
         }
     }
 
@@ -112,7 +114,6 @@ public class KitsuApiFullFetch {
             JsonNode showType = attributes.path("subtype");
             JsonNode titlesNode = attributes.path("titles");
 
-
             KitsuAnime kitsuAnime = new KitsuAnime();
 
             kitsuAnime.setKitsuId(idNode.asInt());
@@ -128,13 +129,13 @@ public class KitsuApiFullFetch {
             kitsuAnime.setShowType(showType.asText());
             boolean animeHasGenres = addGenresToAnime(baseApi, idNode.asInt(), kitsuAnime);
 
-            System.out.println("\u001B[32mFinished data for: " + getAnimeTitle(titlesNode) + " (" + idNode.asInt() + ")\u001B[0m");
-            System.out.println();
-
             // Only save if anime has genres
             if (animeHasGenres) {
                 kitsuAnimeService.saveKitsuAnime(kitsuAnime);
+                System.out.println("\u001B[32mFinished data for: " + getAnimeTitle(titlesNode) + " (" + idNode.asInt() + ")\u001B[0m");
             }
+
+            System.out.println();
         }
 
         return false;
@@ -145,7 +146,7 @@ public class KitsuApiFullFetch {
             HttpURLConnection apiConnection = fetchApiResponse(baseApi + "/anime/" + kitsuId + "/mappings");
 
             if (apiConnection.getResponseCode() != 200) {
-                System.out.println("Error: Could not connect to API");
+                System.out.println("\u001B[31mCould not connect to API for " + kitsuId + "\u001B[0m");
                 return -1;
             }
 
@@ -180,7 +181,7 @@ public class KitsuApiFullFetch {
             HttpURLConnection apiConnection = fetchApiResponse(baseApi + "/anime/" + kitsuId + "/genres");
 
             if (apiConnection.getResponseCode() != 200) {
-                System.out.println("Error: Could not connect to API");
+                System.out.println("\u001B[31mCould not connect to API for " + kitsuAnime.getKitsuId() + "\u001B[0m");
                 return false;
             }
 
@@ -189,7 +190,7 @@ public class KitsuApiFullFetch {
             JsonNode data = pathToData(jsonResponse);
 
             if (data.isNull() || data.isEmpty()) {
-                System.out.println("No genre found on API");
+                System.out.println("\u001B[31mNo genre on API for " + kitsuAnime.getKitsuId() + "\u001B[0m");
                 return false;
             }
 
@@ -245,17 +246,17 @@ public class KitsuApiFullFetch {
 
     private boolean isValidAnime(KitsuAnime kitsuAnime) {
         if (kitsuAnime.getMalId() == -1) {
-            System.out.println("\u001B[31mAnime " + kitsuAnime.getKitsuId() + " is not a valid malId\u001B[0m");
+            System.out.println("\u001B[31m" + kitsuAnime.getKitsuId() + " does not have a valid malId\u001B[0m");
             return false;
         }
 
         if (Objects.equals(kitsuAnime.getAnimeTitle(), "No title")) {
-            System.out.println("\u001B[31m" + kitsuAnime.getKitsuId() + " is not a valid title\u001B[0m");
+            System.out.println("\u001B[31m" + kitsuAnime.getKitsuId() + " does not have a valid title\u001B[0m");
             return false;
         }
 
         if (Objects.equals(kitsuAnime.getShowType(), "music")) {
-            System.out.println("\u001B[31m" + kitsuAnime.getKitsuId() + " is not a valid show_type\u001B[0m");
+            System.out.println("\u001B[31m" + kitsuAnime.getKitsuId() + " does not have a valid show_type\u001B[0m");
             return false;
         }
 
