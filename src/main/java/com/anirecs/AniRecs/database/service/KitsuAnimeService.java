@@ -29,4 +29,8 @@ public class KitsuAnimeService {
     public Genres findByGenreName(String genre) {
         return genreRepo.findByGenreName(genre);
     }
+
+    public KitsuAnime findByMalId(Integer malId) {
+        return animeRepo.findByMalId(malId);
+    }
 }
