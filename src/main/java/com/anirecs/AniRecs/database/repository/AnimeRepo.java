@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AnimeRepo extends JpaRepository<KitsuAnime, Long> {
+public interface AnimeRepo extends JpaRepository<KitsuAnime, Integer> {
     KitsuAnime findByMalId(int malId);
 }
