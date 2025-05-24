@@ -1,6 +1,6 @@
 package com.anirecs.AniRecs.service;
 
-import com.anirecs.AniRecs.database.entities.Anime;
+import com.anirecs.AniRecs.database.entities.MalAnime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,13 +15,13 @@ import java.util.Scanner;
 
 @Service
 public class GetUserAnimeListService {
-    public List<Anime> createUserAnimeList(String username) {
+    public List<MalAnime> createUserAnimeList(String username) {
         JSONArray userAnimeList = getUserAnimeJSON(username);
         if (userAnimeList == null) return null;
         if (!hasRatedAnime(userAnimeList)) return null;
 
         // Convert the JSONArray, into an AnimeList for ease of use.
-        List<Anime> animeList = new ArrayList<>();
+        List<MalAnime> animeList = new ArrayList<>();
         for (Object obj : userAnimeList) {
             JSONObject anime = (JSONObject) obj;
             JSONObject animeNode = (JSONObject) anime.get("node");
@@ -47,10 +47,10 @@ public class GetUserAnimeListService {
             int numTimesRewatched = ((Long) animeStatus.get("num_times_rewatched")).intValue();
 
             // Create an Anime object, set the values and add it to the animeList.
-            Anime animeObject = new Anime(animeId, title, mediumPictureUrl, statusString, score,
+            MalAnime malAnimeObject = new MalAnime(animeId, title, mediumPictureUrl, statusString, score,
                     episodesWatched, episodeDuration, numTimesRewatched, isNSFW);
 
-            animeList.add(animeObject);
+            animeList.add(malAnimeObject);
         }
 
         return animeList;

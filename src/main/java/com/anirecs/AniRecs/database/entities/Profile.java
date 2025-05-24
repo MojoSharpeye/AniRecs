@@ -12,20 +12,20 @@ public class Profile {
     String personality;
     int numberAnimeWatched;
     double hoursWatched;
-    Anime highestRatedAnime;
-    List<Anime> topAnime;
+    MalAnime highestRatedMalAnime;
+    List<MalAnime> topMalAnime;
     String mostWatchedGenre;
     String highestRatedGenre;
     List<String> topGenre;
 
-    public Profile(String name, String personality, int numberAnimeWatched, double hoursWatched, Anime highestRatedAnime,
-                   List<Anime> topAnime, String mostWatchedGenre, String highestRatedGenre, List<String> topGenre) {
+    public Profile(String name, String personality, int numberAnimeWatched, double hoursWatched, MalAnime highestRatedMalAnime,
+                   List<MalAnime> topMalAnime, String mostWatchedGenre, String highestRatedGenre, List<String> topGenre) {
         this.name = name;
         this.personality = personality;
         this.numberAnimeWatched = numberAnimeWatched;
         this.hoursWatched = hoursWatched;
-        this.highestRatedAnime = highestRatedAnime;
-        this.topAnime = topAnime;
+        this.highestRatedMalAnime = highestRatedMalAnime;
+        this.topMalAnime = topMalAnime;
         this.highestRatedGenre = highestRatedGenre;
         this.topGenre = topGenre;
         this.mostWatchedGenre = mostWatchedGenre;

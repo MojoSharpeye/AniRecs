@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Anime {
+public class MalAnime {
     private int animeId;
     private String title;
     private String mainPictureUrl;
@@ -17,8 +17,8 @@ public class Anime {
     private double hoursWatched;
     private boolean isNSFW;
 
-    public Anime (int animeId, String title, String mainPictureUrl, String status, int score, int episodesWatched,
-                  int episodeDuration, int numTimesRewatched, boolean isNSFW) {
+    public MalAnime(int animeId, String title, String mainPictureUrl, String status, int score, int episodesWatched,
+                    int episodeDuration, int numTimesRewatched, boolean isNSFW) {
         this.animeId = animeId;
         this.title = title;
         this.mainPictureUrl = mainPictureUrl;

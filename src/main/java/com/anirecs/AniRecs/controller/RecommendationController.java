@@ -1,7 +1,6 @@
 package com.anirecs.AniRecs.controller;
 
-import com.anirecs.AniRecs.database.entities.Anime;
-import com.anirecs.AniRecs.database.entities.KitsuAnime;
+import com.anirecs.AniRecs.database.entities.MalAnime;
 import com.anirecs.AniRecs.database.entities.Profile;
 import com.anirecs.AniRecs.service.GetGenreMap;
 import com.anirecs.AniRecs.service.GetProfileStats;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/anime")
@@ -35,7 +33,7 @@ public class RecommendationController {
     @GetMapping("/user/{username}")
     public ResponseEntity<Profile> getUserAnime(@PathVariable String username) {
         // TODO: is this the right way to deal with errors on the site?
-        List<Anime> anime = getUserAnimeListService.createUserAnimeList(username);
+        List<MalAnime> anime = getUserAnimeListService.createUserAnimeList(username);
         if(anime == null || anime.isEmpty()) return ResponseEntity.badRequest().build();
 
         Profile profile = getProfileStats.profileStats(anime, username);

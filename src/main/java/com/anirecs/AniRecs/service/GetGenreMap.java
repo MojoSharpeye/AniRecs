@@ -1,6 +1,6 @@
 package com.anirecs.AniRecs.service;
 
-import com.anirecs.AniRecs.database.entities.Anime;
+import com.anirecs.AniRecs.database.entities.MalAnime;
 import com.anirecs.AniRecs.database.entities.Genres;
 import com.anirecs.AniRecs.database.entities.KitsuAnime;
 import com.anirecs.AniRecs.database.service.KitsuAnimeService;
@@ -16,10 +16,10 @@ public class GetGenreMap {
         this.kitsuAnimeService = kitsuAnimeService;
     }
 
-    public Map<String, List<Integer>> genreRatingMap(List<Anime> animeList) {
+    public Map<String, List<Integer>> genreRatingMap(List<MalAnime> malAnimeList) {
         Map<String, List<Integer>> genreRatingMap = new HashMap();
 
-        for (Anime anime : animeList) {
+        for (MalAnime anime : malAnimeList) {
             KitsuAnime animeDetails = kitsuAnimeService.findByMalId(anime.getAnimeId());
             if (animeDetails != null) {
                 for (Genres genre : animeDetails.getGenresSet()) {

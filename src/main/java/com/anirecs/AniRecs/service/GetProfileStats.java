@@ -1,6 +1,6 @@
 package com.anirecs.AniRecs.service;
 
-import com.anirecs.AniRecs.database.entities.Anime;
+import com.anirecs.AniRecs.database.entities.MalAnime;
 import com.anirecs.AniRecs.database.entities.Profile;
 import org.springframework.stereotype.Service;
 
@@ -14,30 +14,30 @@ public class GetProfileStats {
         this.getGenreMap = getGenreMap;
     }
 
-    public Profile profileStats (List<Anime> animeList, String name) {
-        Map<String, List<Integer>> genreRatingMap = getGenreMap.genreRatingMap(animeList);
+    public Profile profileStats (List<MalAnime> malAnimeList, String name) {
+        Map<String, List<Integer>> genreRatingMap = getGenreMap.genreRatingMap(malAnimeList);
         List<String> sortedGenresList = getGenreMap.sortGenres(genreRatingMap);
 
         String mostWatchedGenre = getGenreMap.findMostWatchedGenre(genreRatingMap);
         String personality = createPersonality(sortedGenresList);
 
         double totalHours = 0;
-        for (Anime anime : animeList) {
+        for (MalAnime anime : malAnimeList) {
             totalHours += anime.getHoursWatched();
         }
 
         // Get the size of the sublist
-        int sublistSize = Math.min(animeList.size(), 5);
+        int sublistSize = Math.min(malAnimeList.size(), 5);
         int genreSublistSize = Math.min(sortedGenresList.size(), 5);
 
         // TODO: maybe put rewatches into account for sorting the highest rated anime
         return new Profile(
                 name,
                 personality,
-                animeList.size(),
+                malAnimeList.size(),
                 totalHours,
-                animeList.get(0), // assuming animeList is not empty
-                animeList.subList(0, sublistSize), // prevent out-of-bounds
+                malAnimeList.get(0), // assuming animeList is not empty
+                malAnimeList.subList(0, sublistSize), // prevent out-of-bounds
                 mostWatchedGenre,
                 sortedGenresList.isEmpty() ? "" : sortedGenresList.get(0), // avoid null if list is empty
                 sortedGenresList.subList(0, genreSublistSize) // prevent out-of-bounds

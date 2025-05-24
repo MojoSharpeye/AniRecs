@@ -6,14 +6,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Recommendation {
-    Anime highestRatedGenre;
-    Anime mostWatchedGenre;
-    Anime secondHighestRatedGenre;
-    Anime lowestRatedGenre;
-    Anime randomGenre;
+    MalAnime highestRatedGenre;
+    MalAnime mostWatchedGenre;
+    MalAnime secondHighestRatedGenre;
+    MalAnime lowestRatedGenre;
+    MalAnime randomGenre;
 
-    public Recommendation(Anime highestRatedGenre, Anime mostWatchedGenre, Anime secondHighestRatedGenre,
-                          Anime lowestRatedGenre, Anime randomGenre) {
+    public Recommendation(MalAnime highestRatedGenre, MalAnime mostWatchedGenre, MalAnime secondHighestRatedGenre,
+                          MalAnime lowestRatedGenre, MalAnime randomGenre) {
         this.highestRatedGenre = highestRatedGenre;
         this.mostWatchedGenre = mostWatchedGenre;
         this.secondHighestRatedGenre = secondHighestRatedGenre;
