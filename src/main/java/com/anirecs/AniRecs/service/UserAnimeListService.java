@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 @Service
-public class GetUserAnimeListService {
+public class UserAnimeListService {
+    // Creates a list of all watched animes
     public List<MalAnime> createUserAnimeList(String username) {
         JSONArray userAnimeList = getUserAnimeJSON(username);
         if (userAnimeList == null) return null;
@@ -32,7 +33,7 @@ public class GetUserAnimeListService {
             if (score == 0) continue; // skip invalid scores
 
             boolean isNSFW = false;
-            if ("gray".equals((String) animeNode.get("nsfw")) || "black".equals((String) animeNode.get("nsfw"))) {
+            if ("gray".equals(animeNode.get("nsfw")) || "black".equals(animeNode.get("nsfw"))) {
                 isNSFW = true;
             }
 
@@ -56,7 +57,7 @@ public class GetUserAnimeListService {
         return animeList;
     }
 
-    private static boolean hasRatedAnime (JSONArray userAnimeList) {
+    private static boolean hasRatedAnime(JSONArray userAnimeList) {
         for (int i = 0; i < userAnimeList.size(); i++) {
             JSONObject anime = (JSONObject) userAnimeList.get(i);
             JSONObject animeStatus = (JSONObject) anime.get("list_status");
