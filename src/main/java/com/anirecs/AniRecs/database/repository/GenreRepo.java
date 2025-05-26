@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface GenreRepo extends JpaRepository<Genres, Integer> {
     Genres findByGenreName(String genreName);
-    Genres findById(int id);
+    Genres findByGenreId(int id);
 
     @Query(
             "SELECT anime FROM KitsuAnime anime JOIN anime.genresSet genre " +
