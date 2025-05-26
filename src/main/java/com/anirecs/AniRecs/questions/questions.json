@@ -1,0 +1,11 @@
+[
+  {
+    "question": "What level anime watcher are you",
+    "choice": {
+      "Professional anime watcher": 200,
+      "Advanced": 100,
+      "Normie": 50,
+      "Casuls": 10
+    }
+  }
+]

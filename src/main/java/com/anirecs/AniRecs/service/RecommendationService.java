@@ -24,12 +24,6 @@ public class RecommendationService {
     }
 
     public Recommendation getRecommendation(String username) {
-        // Look through the database and return the anime with the top 5 genres
-        // Look through the database and return the highest rated mostWatchedGenre;
-        // Look through the database and return the highest rated secondHighestRatedGenre;
-        // Look through the database and return the highest rated lowestRatedGenre;
-        // Look through the database and return the highest rated randomGenre;
-
         // Gets all the malIds in the users list
         List<MalAnime> usersList = userAnimeListService.createUserAnimeList(username);
         Set<Integer> userMalIds = usersList.stream()
