@@ -9,23 +9,23 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class GetGenreMap {
+public class GenreMap {
     private KitsuAnimeService kitsuAnimeService;
 
-    public GetGenreMap (KitsuAnimeService kitsuAnimeService) {
+    public GenreMap(KitsuAnimeService kitsuAnimeService) {
         this.kitsuAnimeService = kitsuAnimeService;
     }
 
-    public Map<String, List<Integer>> genreRatingMap(List<MalAnime> malAnimeList) {
-        Map<String, List<Integer>> genreRatingMap = new HashMap();
+    public Map<String, List<Double>> genreRatingMap(List<MalAnime> malAnimeList) {
+        Map<String, List<Double>> genreRatingMap = new HashMap<>();
 
         for (MalAnime anime : malAnimeList) {
             KitsuAnime animeDetails = kitsuAnimeService.findByMalId(anime.getAnimeId());
             if (animeDetails != null) {
                 for (Genres genre : animeDetails.getGenresSet()) {
                    String genreName = genre.getGenreName();
-                   int score = anime.getScore();
-                   ((List)genreRatingMap.computeIfAbsent(genreName, (key) -> new ArrayList())).add(score);
+                   double score = anime.getScore();
+                   (genreRatingMap.computeIfAbsent(genreName, (key) -> new ArrayList<>())).add(score);
                 }
             }
         }
@@ -33,49 +33,57 @@ public class GetGenreMap {
         return genreRatingMap;
     }
 
-    public List<String> sortGenres(Map<String, List<Integer>> genreRatingMap) {
+    // Sort genres from highest to lowest
+    public List<String> sortGenres(Map<String, List<Double>> genreRatingMap) {
         // Calculate the averages of the scores (if there are less than three scores, it is not included)
-        Map<String, Integer> genreAvgRatingMap = calculateAverageGenreRatingMap(genreRatingMap, 3);
+        Map<String, Double> genreAvgRatingMap = calculateAverageGenreRatingMap(genreRatingMap, 3);
 
         // if the genre list cannot be sorted (too few scores), sort the list again without the threshold
         if (genreAvgRatingMap.isEmpty()) genreAvgRatingMap = calculateAverageGenreRatingMap(genreRatingMap, 1);
 
         // Sort the averages
-        List<Map.Entry<String, Integer>> sortedGenres = new ArrayList<>(genreAvgRatingMap.entrySet());
+        List<Map.Entry<String, Double>> sortedGenres = new ArrayList<>(genreAvgRatingMap.entrySet());
         sortedGenres.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
 
+        for (Map.Entry<String, Double> sortedGenre : sortedGenres) {
+            System.out.println("GenreToRating: " + sortedGenre.getKey() + " (" + sortedGenre.getValue() + ")");
+        }
+        System.out.println();
+
         List<String> sortedGenresList = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : sortedGenres) {
+        for (Map.Entry<String, Double> entry : sortedGenres) {
             sortedGenresList.add(entry.getKey());
         }
 
         return sortedGenresList;
     }
 
-    private static Map<String, Integer> calculateAverageGenreRatingMap (Map<String, List<Integer>> genreRatingMap, int threshold) {
-        Map<String, Integer> genreAvgRatingMap = new HashMap();
-        for (Map.Entry<String, List<Integer>> entry : genreRatingMap.entrySet()) {
+    private static Map<String, Double> calculateAverageGenreRatingMap (Map<String, List<Double>> genreRatingMap, int threshold) {
+        Map<String, Double> genreAvgRatingMap = new HashMap<>();
+
+        for (Map.Entry<String, List<Double>> entry : genreRatingMap.entrySet()) {
             String genre = entry.getKey();
-            List<Integer> ratings = entry.getValue();
+            List<Double> ratings = entry.getValue();
 
             if (ratings.size() < threshold) {
                 continue;
             }
 
             int sum = 0;
-            for (Integer rating : ratings) {
+            for (Double rating : ratings) {
                 sum += rating;
             }
-            int average = sum / ratings.size();
+            double average = (double) sum / ratings.size();
             genreAvgRatingMap.put(genre, average);
         }
+
         return genreAvgRatingMap;
     }
 
-    public String findMostWatchedGenre(Map<String, List<Integer>> genreRatingMap) {
+    public String findMostWatchedGenre(Map<String, List<Double>> genreRatingMap) {
         String mostWatchedGenre = null;
         int max = 0;
-        for (Map.Entry<String, List<Integer>> entry : genreRatingMap.entrySet()) {
+        for (Map.Entry<String, List<Double>> entry : genreRatingMap.entrySet()) {
             int count = entry.getValue().size();
             if (count > max) {
                 max = count;

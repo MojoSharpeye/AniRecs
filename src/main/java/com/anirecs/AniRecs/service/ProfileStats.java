@@ -7,18 +7,18 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class GetProfileStats {
-    private GetGenreMap getGenreMap;
+public class ProfileStats {
+    private GenreMap genreMap;
 
-    public GetProfileStats(GetGenreMap getGenreMap) {
-        this.getGenreMap = getGenreMap;
+    public ProfileStats(GenreMap genreMap) {
+        this.genreMap = genreMap;
     }
 
     public Profile profileStats (List<MalAnime> malAnimeList, String name) {
-        Map<String, List<Integer>> genreRatingMap = getGenreMap.genreRatingMap(malAnimeList);
-        List<String> sortedGenresList = getGenreMap.sortGenres(genreRatingMap);
+        Map<String, List<Double>> genreRatingMap = genreMap.genreRatingMap(malAnimeList);
+        List<String> sortedGenresList = genreMap.sortGenres(genreRatingMap);
 
-        String mostWatchedGenre = getGenreMap.findMostWatchedGenre(genreRatingMap);
+        String mostWatchedGenre = genreMap.findMostWatchedGenre(genreRatingMap);
         String personality = createPersonality(sortedGenresList);
 
         double totalHours = 0;
@@ -36,10 +36,11 @@ public class GetProfileStats {
                 personality,
                 malAnimeList.size(),
                 totalHours,
-                malAnimeList.get(0), // assuming animeList is not empty
+                malAnimeList.getFirst(), // assuming animeList is not empty
                 malAnimeList.subList(0, sublistSize), // prevent out-of-bounds
                 mostWatchedGenre,
-                sortedGenresList.isEmpty() ? "" : sortedGenresList.get(0), // avoid null if list is empty
+                sortedGenresList.isEmpty() ? "" : sortedGenresList.getFirst(), // avoid null if list is empty
+                sortedGenresList.isEmpty() ? "" : sortedGenresList.getLast(),
                 sortedGenresList.subList(0, genreSublistSize) // prevent out-of-bounds
         );
     }

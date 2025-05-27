@@ -1,5 +1,6 @@
 package com.anirecs.AniRecs.database.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,27 +8,18 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Profile {
     String name;
     String personality;
     int numberAnimeWatched;
     double hoursWatched;
+
     MalAnime highestRatedMalAnime;
-    List<MalAnime> topMalAnime;
+    List<MalAnime> top5MalAnime;
+
     String mostWatchedGenre;
     String highestRatedGenre;
-    List<String> topGenre;
-
-    public Profile(String name, String personality, int numberAnimeWatched, double hoursWatched, MalAnime highestRatedMalAnime,
-                   List<MalAnime> topMalAnime, String mostWatchedGenre, String highestRatedGenre, List<String> topGenre) {
-        this.name = name;
-        this.personality = personality;
-        this.numberAnimeWatched = numberAnimeWatched;
-        this.hoursWatched = hoursWatched;
-        this.highestRatedMalAnime = highestRatedMalAnime;
-        this.topMalAnime = topMalAnime;
-        this.highestRatedGenre = highestRatedGenre;
-        this.topGenre = topGenre;
-        this.mostWatchedGenre = mostWatchedGenre;
-    }
+    String lowestRatedGenre;
+    List<String> top5Genre;
 }

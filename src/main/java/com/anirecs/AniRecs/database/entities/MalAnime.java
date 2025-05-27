@@ -30,10 +30,4 @@ public class MalAnime {
         this.hoursWatched = ((double) episodeDuration * (double) episodesWatched) / 3600;
         this.isNSFW = isNSFW;
     }
-
-    // Override toString() method for easy printing
-    @Override
-    public String toString() {
-        return String.format("%s (%d) - Status: %s | Score: %d | Episodes watched: %d", title, animeId, status, score, episodesWatched);
-    }
 }

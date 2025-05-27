@@ -1,23 +1,22 @@
 package com.anirecs.AniRecs.database.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Recommendation {
-    MalAnime highestRatedGenre;
-    MalAnime mostWatchedGenre;
-    MalAnime secondHighestRatedGenre;
-    MalAnime lowestRatedGenre;
-    MalAnime randomGenre;
+//    KitsuAnime animeWithTop5Genre;
+//    KitsuAnime mostWatchedGenre;
+//    KitsuAnime highestRatedGenre;
+//    KitsuAnime lowestRatedGenre;
+//    KitsuAnime randomGenre;
 
-    public Recommendation(MalAnime highestRatedGenre, MalAnime mostWatchedGenre, MalAnime secondHighestRatedGenre,
-                          MalAnime lowestRatedGenre, MalAnime randomGenre) {
-        this.highestRatedGenre = highestRatedGenre;
-        this.mostWatchedGenre = mostWatchedGenre;
-        this.secondHighestRatedGenre = secondHighestRatedGenre;
-        this.lowestRatedGenre = lowestRatedGenre;
-        this.randomGenre = randomGenre;
-    }
+    String animeWithTop5Genre;
+    String mostWatchedGenre;
+    String highestRatedGenre;
+    String lowestRatedGenre;
+    String randomGenre;
 }

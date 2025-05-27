@@ -2,10 +2,11 @@ package com.anirecs.AniRecs.controller;
 
 import com.anirecs.AniRecs.database.entities.MalAnime;
 import com.anirecs.AniRecs.database.entities.Profile;
-import com.anirecs.AniRecs.service.GetGenreMap;
-import com.anirecs.AniRecs.service.GetProfileStats;
-import com.anirecs.AniRecs.service.GetRecommendation;
-import com.anirecs.AniRecs.service.GetUserAnimeListService;
+import com.anirecs.AniRecs.database.entities.Recommendation;
+import com.anirecs.AniRecs.service.GenreMap;
+import com.anirecs.AniRecs.service.ProfileStats;
+import com.anirecs.AniRecs.service.RecommendationService;
+import com.anirecs.AniRecs.service.UserAnimeListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,37 +18,39 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/anime")
 public class RecommendationController {
-    private final GetUserAnimeListService getUserAnimeListService;
-    private final GetProfileStats getProfileStats;
-    private final GetRecommendation getRecommendation;
-    private final GetGenreMap getGenreMap;
+    private final UserAnimeListService userAnimeListService;
+    private final ProfileStats profileStats;
+    private final RecommendationService recommendationService;
+    private final GenreMap genreMap;
 
-    public RecommendationController(GetUserAnimeListService getUserAnimeListService, GetProfileStats getProfileStats,
-                                    GetRecommendation getRecommendation, GetGenreMap getGenreMap) {
-        this.getUserAnimeListService = getUserAnimeListService;
-        this.getProfileStats = getProfileStats;
-        this.getRecommendation = getRecommendation;
-        this.getGenreMap = getGenreMap;
+    public RecommendationController(UserAnimeListService userAnimeListService, ProfileStats profileStats,
+                                    RecommendationService recommendationService, GenreMap genreMap) {
+        this.userAnimeListService = userAnimeListService;
+        this.profileStats = profileStats;
+        this.recommendationService = recommendationService;
+        this.genreMap = genreMap;
     }
 
     @GetMapping("/user/{username}")
     public ResponseEntity<Profile> getUserAnime(@PathVariable String username) {
         // TODO: is this the right way to deal with errors on the site?
-        List<MalAnime> anime = getUserAnimeListService.createUserAnimeList(username);
+        List<MalAnime> anime = userAnimeListService.createUserAnimeList(username);
         if(anime == null || anime.isEmpty()) return ResponseEntity.badRequest().build();
 
-        Profile profile = getProfileStats.profileStats(anime, username);
+        Profile profile = profileStats.profileStats(anime, username);
         return ResponseEntity.ok(profile);
     }
 
-//    @GetMapping("/user/{username}/recommendations")
-//    public List<KitsuAnime> getUserRecommendations(@PathVariable String username) {
-//        // TODO Seems stupid to have to run this all again even though, we found it on the last page. Should we just combine the routes?
-//        List<Anime> anime = getUserAnimeListService.createUserAnimeList(username);
-//        Map<String, List<Integer>> genreRatingMap = getGenreMap.genreRatingMap(anime);
-//        List<String> sortedGenresList = getGenreMap.sortGenres(genreRatingMap);
-//        List<KitsuAnime> recommendations = getRecommendation.recommendAnime(sortedGenresList.subList(0,5));
-//
-//        return recommendations;
-//    }
+    @GetMapping("/user/{username}/recommendation")
+    public Recommendation getRecommendation(@PathVariable String username) {
+        long startTime = System.nanoTime();
+
+        Recommendation recommendation = recommendationService.getRecommendation(username);
+
+        long endTime = System.nanoTime();
+        long durationInMillis = (endTime - startTime) / 1_000_000;
+        System.out.println("Execution time for getRecommendation: " + durationInMillis + " ms");
+
+        return recommendation;
+    }
 }

@@ -18,7 +18,7 @@ import java.util.Set;
 public class Genres {
     @Id
     @GeneratedValue
-    private int id;
+    private int genreId;
     private String genreName;
 
     @ManyToMany(mappedBy = "genresSet")
