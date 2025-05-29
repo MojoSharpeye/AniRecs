@@ -1,7 +1,7 @@
 package com.anirecs.AniRecs.service;
 
 import com.anirecs.AniRecs.database.entities.*;
-import com.anirecs.AniRecs.database.service.KitsuAnimeService;
+import com.anirecs.AniRecs.database.service.MALAnimeService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 public class RecommendationService {
     private ProfileStats profileStats;
     private UserAnimeListService userAnimeListService;
-    private KitsuAnimeService kitsuAnimeService;
+    private MALAnimeService MALAnimeService;
 
     public RecommendationService(ProfileStats profileStats, UserAnimeListService userAnimeListService,
-                                 KitsuAnimeService kitsuAnimeService) {
+                                 MALAnimeService MALAnimeService) {
         this.profileStats = profileStats;
         this.userAnimeListService = userAnimeListService;
-        this.kitsuAnimeService = kitsuAnimeService;
+        this.MALAnimeService = MALAnimeService;
     }
 
     public Recommendation getRecommendation(String username) {
@@ -40,19 +40,19 @@ public class RecommendationService {
 
         Set<Integer> recKitsuIds = new HashSet<>();
 
-        KitsuAnime animeWithTop5GenreRec = getAnimeWithTop5Genre(profile.getTop5Genre(), userMalIds);
-        recKitsuIds.add(animeWithTop5GenreRec.getKitsuId());
+        MalAnimeDatabase animeWithTop5GenreRec = getAnimeWithTop5Genre(profile.getTop5Genre(), userMalIds);
+        recKitsuIds.add(animeWithTop5GenreRec.getMalId());
 
-        KitsuAnime mostWatchedGenreRec = getAnimeWithMostWatchedGenre(profile.getMostWatchedGenre(), userMalIds, recKitsuIds);
-        recKitsuIds.add(mostWatchedGenreRec.getKitsuId());
+        MalAnimeDatabase mostWatchedGenreRec = getAnimeWithMostWatchedGenre(profile.getMostWatchedGenre(), userMalIds, recKitsuIds);
+        recKitsuIds.add(mostWatchedGenreRec.getMalId());
 
-        KitsuAnime highestHighestRatedGenreRec = getAnimeWithHighestRatedGenre(profile.getHighestRatedGenre(), userMalIds, recKitsuIds);
-        recKitsuIds.add(highestHighestRatedGenreRec.getKitsuId());
+        MalAnimeDatabase highestHighestRatedGenreRec = getAnimeWithHighestRatedGenre(profile.getHighestRatedGenre(), userMalIds, recKitsuIds);
+        recKitsuIds.add(highestHighestRatedGenreRec.getMalId());
 
-        KitsuAnime lowestRatedGenreRec = getAnimeWithLowestRatedGenre(profile.getLowestRatedGenre(), userMalIds, recKitsuIds);
-        recKitsuIds.add(lowestRatedGenreRec.getKitsuId());
+        MalAnimeDatabase lowestRatedGenreRec = getAnimeWithLowestRatedGenre(profile.getLowestRatedGenre(), userMalIds, recKitsuIds);
+        recKitsuIds.add(lowestRatedGenreRec.getMalId());
 
-        KitsuAnime randomGenreRec = getAnimeWithRandomGenre(userMalIds, recKitsuIds);
+        MalAnimeDatabase randomGenreRec = getAnimeWithRandomGenre(userMalIds, recKitsuIds);
 
         return new Recommendation(
             animeWithTop5GenreRec.getAnimeTitle(),
@@ -66,14 +66,14 @@ public class RecommendationService {
     // Gets the highest rated anime that matches with users top 5 genres
     // If anime rating is below 8, then uses only 4 genres
     // Continues until an anime rating is above 8
-    public KitsuAnime getAnimeWithTop5Genre(List<String> top5Genres, Set<Integer> userList) {
-        List<KitsuAnime> animeListRec = kitsuAnimeService.findAnimesByGenreNameList(top5Genres);
+    public MalAnimeDatabase getAnimeWithTop5Genre(List<String> top5Genres, Set<Integer> userList) {
+        List<MalAnimeDatabase> animeListRec = MALAnimeService.findAnimesByGenreNameList(top5Genres);
 
         if (animeListRec == null || animeListRec.isEmpty()) {
             return null;
         }
 
-        for (KitsuAnime anime : animeListRec) {
+        for (MalAnimeDatabase anime : animeListRec) {
             if (!userList.contains(anime.getMalId())) {
                 return anime;
             }
@@ -83,40 +83,40 @@ public class RecommendationService {
     }
 
     // Gets the highest rated anime with the most watched genre
-    public KitsuAnime getAnimeWithMostWatchedGenre(String mostWatchedGenre, Set<Integer> userList, Set<Integer> recKitsuIds) {
+    public MalAnimeDatabase getAnimeWithMostWatchedGenre(String mostWatchedGenre, Set<Integer> userList, Set<Integer> recKitsuIds) {
         return findRec(mostWatchedGenre, userList, recKitsuIds);
     }
 
     // Gets the highest rated anime with the second-highest rated genre
-    public KitsuAnime getAnimeWithHighestRatedGenre(String highestRatedGenre, Set<Integer> userList, Set<Integer> recKitsuIds) {
+    public MalAnimeDatabase getAnimeWithHighestRatedGenre(String highestRatedGenre, Set<Integer> userList, Set<Integer> recKitsuIds) {
         return findRec(highestRatedGenre, userList, recKitsuIds);
     }
 
     // Gets the highest rated anime with the lowest rated genre
-    public KitsuAnime getAnimeWithLowestRatedGenre(String lowestRatedGenre, Set<Integer> userList, Set<Integer> recKitsuIds) {
+    public MalAnimeDatabase getAnimeWithLowestRatedGenre(String lowestRatedGenre, Set<Integer> userList, Set<Integer> recKitsuIds) {
         return findRec(lowestRatedGenre, userList, recKitsuIds);
     }
 
     // Gets anime with a random genre
-    public KitsuAnime getAnimeWithRandomGenre(Set<Integer> userList, Set<Integer> recKitsuIds) {
+    public MalAnimeDatabase getAnimeWithRandomGenre(Set<Integer> userList, Set<Integer> recKitsuIds) {
         Random rand = new Random();
-        String genre = kitsuAnimeService.findByGenreId(rand.nextInt(61)).getGenreName();
+        String genre = MALAnimeService.findByGenreId(rand.nextInt(61)).getGenreName();
         return findRec(genre, userList, recKitsuIds);
     }
 
-    private KitsuAnime findRec(String genre, Set<Integer> userList, Set<Integer> recKitsuIds) {
+    private MalAnimeDatabase findRec(String genre, Set<Integer> userList, Set<Integer> recKitsuIds) {
         int i = 1;
-        KitsuAnime animeRec = kitsuAnimeService.findHighestRatedAnimeWithGenreName(genre, i);
+        MalAnimeDatabase animeRec = MALAnimeService.findHighestRatedAnimeWithGenreName(genre, i);
         while (checkIfRecIsInvalid(animeRec, userList, recKitsuIds)) {
             i++;
-            animeRec = kitsuAnimeService.findHighestRatedAnimeWithGenreName(genre, i);
+            animeRec = MALAnimeService.findHighestRatedAnimeWithGenreName(genre, i);
         }
         return animeRec;
     }
 
-    private boolean checkIfRecIsInvalid(KitsuAnime kitsuAnime, Set<Integer> userList, Set<Integer> recKitsuIds) {
-        Integer malId = kitsuAnime.getMalId();
-        Integer kitsuId = kitsuAnime.getKitsuId();
+    private boolean checkIfRecIsInvalid(MalAnimeDatabase malAnimeDataBase, Set<Integer> userList, Set<Integer> recKitsuIds) {
+        Integer malId = malAnimeDataBase.getMalId();
+        Integer kitsuId = malAnimeDataBase.getMalId();
         return userList.contains(malId) || recKitsuIds.contains(kitsuId);
     }
 }

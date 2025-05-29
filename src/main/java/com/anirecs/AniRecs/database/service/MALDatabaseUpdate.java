@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 
 @Service
-public class KitsuDatabaseUpdate {
-    private KitsuApiFullFetch kitsuApiFullFetch;
+public class MALDatabaseUpdate {
+    private MalApiFullFetch malApiFullFetch;
 
-    public KitsuDatabaseUpdate(KitsuApiFullFetch kitsuApiFullFetch) {
-        this.kitsuApiFullFetch = kitsuApiFullFetch;
+    public MALDatabaseUpdate(MalApiFullFetch malApiFullFetch) {
+        this.malApiFullFetch = malApiFullFetch;
     }
 
     // Get the last page from a file
@@ -31,7 +31,7 @@ public class KitsuDatabaseUpdate {
             lastPage = 0;
         }
 
-        lastPage = kitsuApiFullFetch.getAllData(lastPage);
+        lastPage = malApiFullFetch.getAllData(lastPage);
 
         writePageToFile(lastPage);
     }
