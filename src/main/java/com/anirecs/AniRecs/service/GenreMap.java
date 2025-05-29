@@ -45,11 +45,6 @@ public class GenreMap {
         List<Map.Entry<String, Double>> sortedGenres = new ArrayList<>(genreAvgRatingMap.entrySet());
         sortedGenres.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
 
-        for (Map.Entry<String, Double> sortedGenre : sortedGenres) {
-            System.out.println("GenreToRating: " + sortedGenre.getKey() + " (" + sortedGenre.getValue() + ")");
-        }
-        System.out.println();
-
         List<String> sortedGenresList = new ArrayList<>();
         for (Map.Entry<String, Double> entry : sortedGenres) {
             sortedGenresList.add(entry.getKey());
