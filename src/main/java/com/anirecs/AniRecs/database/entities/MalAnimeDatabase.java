@@ -15,18 +15,17 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "anime")
-public class KitsuAnime {
+public class MalAnimeDatabase {
     @Id
-    private int kitsuId;
     private Integer malId;
     private String animeTitle;
     private double averageRating;
     private int episodeCount;
     private String status;
-    private String releaseDate;
     private String posterUrl;
-    private String ageRating;
+    private int averageEpDuration;
     private String showType;
+    private String startDate;
 
     @Column(columnDefinition = "TEXT")
     private String synopsis;

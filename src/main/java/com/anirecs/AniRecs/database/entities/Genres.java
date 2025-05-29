@@ -22,5 +22,5 @@ public class Genres {
     private String genreName;
 
     @ManyToMany(mappedBy = "genresSet")
-    private Set<KitsuAnime> animeDetails = new HashSet<>();
+    private Set<MalAnimeDatabase> animeDetails = new HashSet<>();
 }
