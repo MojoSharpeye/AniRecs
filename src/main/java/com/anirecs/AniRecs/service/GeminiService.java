@@ -19,7 +19,7 @@ public class GeminiService {
         String prompt = "Player inputs: " + nextQuestion.getAnswer() + ". Pretend you are a game narrator and create a scene " +
                 "with the player's input and link it into the next question: \"" + nextQuestion.getQuestion() +
                 "\". Do NOT explain, summarize, or act like a chatbot. Keep descriptions brief. Follow the question as closely " +
-                "as possible";
+                "as possible but you must be coherent the entire way through.";
         GenerateContentResponse response = client.models.generateContent("gemini-2.0-flash-001", prompt, null);
         return response.text();
     }
