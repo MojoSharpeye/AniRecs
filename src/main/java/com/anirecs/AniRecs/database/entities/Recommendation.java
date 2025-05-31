@@ -4,16 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class Recommendation {
-//    KitsuAnime animeWithTop5Genre;
-//    KitsuAnime mostWatchedGenre;
-//    KitsuAnime highestRatedGenre;
-//    KitsuAnime lowestRatedGenre;
-//    KitsuAnime randomGenre;
-
     String animeWithTop5Genre;
     String mostWatchedGenre;
     String highestRatedGenre;
