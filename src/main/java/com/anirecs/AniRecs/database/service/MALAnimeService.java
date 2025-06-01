@@ -48,5 +48,6 @@ public class MALAnimeService {
     // Finds the highest (nth from the top row) rated anime with the genre name
     public MalAnimeDatabase findHighestRatedAnimeWithGenreName(String genreName, int offsetFromTop) {
         List<MalAnimeDatabase> list = animeRepo.findByGenresSet_GenreNameOrderByAverageRatingDesc(genreName, PageRequest.of(0, offsetFromTop));
-        return list.isEmpty() ? null : list.getLast();    }
+        return list.isEmpty() ? null : list.getLast();
     }
+}

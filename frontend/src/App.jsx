@@ -7,6 +7,7 @@ function App() {
   const [questionsVisible, setQuestionVisible] = useState(true);
   const [personalityVisible, setPersonalityVisible] = useState(false);
   const [recommendationVisible, setRecommendationVisible] = useState(false);
+  const [personality, setPersonality] = useState("");
 
   const [questionHistory, setQuestionHistory] = useState([]);
 
@@ -25,12 +26,13 @@ function App() {
       {personalityVisible && (
         <GetPersonality 
           setPersonalityVisible={setPersonalityVisible}
+          setPersonality={setPersonality}
           setRecommendationVisible={setRecommendationVisible}
           questionHistory={questionHistory}
         />)
       }
 
-      {recommendationVisible && (<GetRecommendation/>)}
+      {recommendationVisible && (<GetRecommendation personalityDescription={personality}/>)};
     </div>
   )
 }

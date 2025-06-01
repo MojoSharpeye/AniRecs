@@ -31,6 +31,7 @@ public class GeminiService {
                 "- If the question gives instructions, follow the instructions of the question is a must\n" +
                 "- There must be no jumps in location. If you want to change the location, there must be a link\n";
         GenerateContentResponse response = client.models.generateContent("gemini-2.0-flash-001", prompt, null);
+
         return response.text();
     }
 
@@ -54,8 +55,8 @@ public class GeminiService {
         }
 
         String prompt = promptBuilder.toString();
-        System.out.println(prompt);
         GenerateContentResponse response = client.models.generateContent("gemini-2.0-flash-001", prompt, null);
+
         return response.text();
     }
 }

@@ -1,6 +1,7 @@
 package com.anirecs.AniRecs.controller;
 
 import com.anirecs.AniRecs.database.entities.MalAnime;
+import com.anirecs.AniRecs.database.entities.MalAnimeDatabase;
 import com.anirecs.AniRecs.database.entities.Profile;
 import com.anirecs.AniRecs.database.entities.Recommendation;
 import com.anirecs.AniRecs.service.GenreMap;
@@ -10,9 +11,11 @@ import com.anirecs.AniRecs.service.UserAnimeListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/anime")
 public class RecommendationController {
@@ -52,16 +55,24 @@ public class RecommendationController {
         return recommendation;
     }
 
-    @@GetMapping("/user/{personality}/recommendation")
-    public Recommendation getRecommendationNoUser(@PathVariable String personality) {
+    @GetMapping("/user/{personality}/precommendation")
+    public List<String> getRecommendationNoUser(@PathVariable String personality) {
         long startTime = System.nanoTime();
 
-        // Recommendation recommendation = recommendationService.getRecommendation(username);
+        List<MalAnimeDatabase> reccList = recommendationService.getAnimeListWithPersonality(personality);
+
+        List<String> titles = new ArrayList<>();
+        for (int i = 0; i < 5; i ++) {
+            MalAnimeDatabase anime = reccList.get(i);
+            System.out.println(anime.getAnimeTitle());
+            System.out.println();
+            titles.add(anime.getAnimeTitle());
+        }
 
         long endTime = System.nanoTime();
         long durationInMillis = (endTime - startTime) / 1_000_000;
         System.out.println("Execution time for getRecommendation: " + durationInMillis + " ms");
 
-        return null;
+        return titles;
     }
 }

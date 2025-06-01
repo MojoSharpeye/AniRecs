@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react";
 
-function GetPersonality({ setPersonalityVisible, setRecommendationVisible, questionHistory }) {
+function GetPersonality({ setPersonalityVisible, setPersonality, setRecommendationVisible, questionHistory }) {
   const personalityMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:8080/quiz/personality", {
@@ -18,8 +18,9 @@ function GetPersonality({ setPersonalityVisible, setRecommendationVisible, quest
 
   const handleClick = (event) => {
     event.stopPropagation();
-    setPersonalityVisible(false);
+    setPersonality(personalityMutation.data);
     setRecommendationVisible(true);
+    setPersonalityVisible(false);
   }
   
   useEffect(() => {

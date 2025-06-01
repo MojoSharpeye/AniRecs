@@ -4,10 +4,7 @@ import com.anirecs.AniRecs.database.entities.*;
 import com.anirecs.AniRecs.database.service.MALAnimeService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +45,6 @@ public class RecommendationService {
 
         MalAnimeDatabase randomGenreRec = getAnimeWithRandomGenre(userMalIds, recMalIds);
 
-
         return new Recommendation(
             animeWithTop5GenreRec.getAnimeTitle(),
             mostWatchedGenreRec.getAnimeTitle(),
@@ -75,6 +71,24 @@ public class RecommendationService {
         }
 
         return null;
+    }
+
+    public List<MalAnimeDatabase> getAnimeListWithPersonality(String personality) {
+        return MALAnimeService.findAnimesByGenreNameList(getGenresByPersonality(personality));
+    }
+
+    private List<String> getGenresByPersonality(String personality) {
+        return switch (personality.toUpperCase()) {
+            case "EDGELORD/UNWELL" -> Arrays.asList("Horror", "Psychological", "Gore", "Tragedy");
+            case "SHOUNEN" -> Arrays.asList("Action", "Comedy", "Sci-Fi", "Space", "Supernatural", "Sports",
+                    "Cars", "Racing", "Martial Arts", "Super Power", "Mecha", "Samurai");
+            case "FANTASY" -> Arrays.asList("Adventure", "Magic", "Fantasy", "Demons", "Isekai");
+            case "HOPELESS ROMANTIC" -> Arrays.asList("Romance", "Slice of Life", "School", "Youth", "Family");
+            case "SOPHISTICATED TASTE" ->
+                    Arrays.asList("Drama", "Mystery", "Police", "Thriller", "Political", "Mature", "Law");
+            case "MASTER GOONER" -> Arrays.asList("Ecchi", "Harem", "Hentai", "Doujinshi");
+            default -> Collections.emptyList();
+        };
     }
 
     // Gets the highest rated anime with the most watched genre

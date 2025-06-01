@@ -25,7 +25,7 @@ public class MALDatabaseUpdate {
         int lastPage = getLastPage();
 
         // Needs to offset it so that it doesn't go to next page which is empty
-        lastPage -= 40;
+        lastPage -= 100;
 
         if (lastPage < 0) {
             lastPage = 0;

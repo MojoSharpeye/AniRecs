@@ -1,12 +1,14 @@
 import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react";
 
-function GetRecommendation({ personality }) {
+function GetRecommendation({ personalityDescription }) {
     const recMutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch(`http://localhost:8080/user/${personality}/recommendation`);
+      const personality = personalityDescription.split(".")[0]; 
+      console.log(`http://localhost:8080/api/anime/user/${encodeURIComponent(personality)}/precommendation`);
+      const res = await fetch(`http://localhost:8080/api/anime/user/${encodeURIComponent(personality)}/precommendation`);
 
-      return res.text();
+      return res.json();
     }
   })
   

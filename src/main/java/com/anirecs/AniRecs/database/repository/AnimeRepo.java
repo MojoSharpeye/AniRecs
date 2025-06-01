@@ -10,9 +10,7 @@ import java.util.List;
 @Repository
 public interface AnimeRepo extends JpaRepository<MalAnimeDatabase, Integer> {
     MalAnimeDatabase findByMalId(int malId);
-    // what is extends?
+
     // Find by genreSet with name, order the results by averageRating in descending order
     List<MalAnimeDatabase> findByGenresSet_GenreNameOrderByAverageRatingDesc(String genreName, Pageable pageable);
 }
-
-// jpa

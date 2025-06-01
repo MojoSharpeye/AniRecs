@@ -85,6 +85,7 @@ public class GenreMap {
                 mostWatchedGenre = entry.getKey();
             }
         }
+
         return mostWatchedGenre;
     }
 }
