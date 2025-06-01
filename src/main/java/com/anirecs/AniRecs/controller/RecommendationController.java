@@ -51,4 +51,17 @@ public class RecommendationController {
 
         return recommendation;
     }
+
+    @@GetMapping("/user/{personality}/recommendation")
+    public Recommendation getRecommendationNoUser(@PathVariable String personality) {
+        long startTime = System.nanoTime();
+
+        // Recommendation recommendation = recommendationService.getRecommendation(username);
+
+        long endTime = System.nanoTime();
+        long durationInMillis = (endTime - startTime) / 1_000_000;
+        System.out.println("Execution time for getRecommendation: " + durationInMillis + " ms");
+
+        return null;
+    }
 }

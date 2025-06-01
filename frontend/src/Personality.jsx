@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react";
 
-function GetPersonality({ questionHistory }) {
+function GetPersonality({ setPersonalityVisible, setRecommendationVisible, questionHistory }) {
   const personalityMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:8080/quiz/personality", {
@@ -15,16 +15,31 @@ function GetPersonality({ questionHistory }) {
       return res.text();
     }
   })
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    setPersonalityVisible(false);
+    setRecommendationVisible(true);
+  }
   
   useEffect(() => {
     personalityMutation.mutate();
   }, []);
 
   if (personalityMutation.isSuccess) {
-    return <div>Personality: {personalityMutation.data}</div>;
+    return( 
+      <div>
+          <div>Personality: {personalityMutation.data}</div>;
+          <button onClick={(event) => handleClick(event)}>Click here for your recommendation</button>;
+      </div>
+    );
   }
 
-  return( <div>Updating personality...</div>);
+  if (personalityMutation.isPending) {
+    return <div>Updating personality...</div>;
+  }
+
+  return null;
 }
 
 export default GetPersonality
