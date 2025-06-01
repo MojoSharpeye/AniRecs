@@ -1,6 +1,6 @@
 package com.anirecs.AniRecs.service;
 
-import com.anirecs.AniRecs.database.entities.Question;
+import com.anirecs.AniRecs.questions.Question;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,10 @@ public class GeminiService {
     }
 
     public String generateNextQuestion(Question nextQuestion) {
-        String prompt =
-                "Please link the user input, what they'd do in a situation and smoothly transition into the next question like a text based video game" +
-                        "Reply ONLY with the a short recap of what action they took then the new question just pure text no parenthesis or chat bot text " +
-                        "which transitions very smoothly and logically from the users action to the next question. You must use aspects of the next question" +
-                        " The next question is: " +
-                        nextQuestion.getQuestion() + "The user input is: " + nextQuestion.getAnswer();
+        String prompt = "Player inputs: " + nextQuestion.getAnswer() + ". Pretend you are a game narrator and create a scene " +
+                "with the player's input and link it into the next question: \"" + nextQuestion.getQuestion() +
+                "\". Do NOT explain, summarize, or act like a chatbot. Keep descriptions brief. Follow the question as closely " +
+                "as possible but you must be coherent the entire way through.";
         GenerateContentResponse response = client.models.generateContent("gemini-2.0-flash-001", prompt, null);
         return response.text();
     }
