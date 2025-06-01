@@ -1,6 +1,7 @@
 package com.anirecs.AniRecs.service;
 
 import com.anirecs.AniRecs.questions.Question;
+import com.anirecs.AniRecs.questions.QuestionReq;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,20 @@ public class GeminiService {
         this.client = new Client();
     }
 
-    public String generateNextQuestion(Question nextQuestion) {
-        String prompt = "Player inputs: " + nextQuestion.getAnswer() + ". Pretend you are a game narrator and create a scene " +
-                "with the player's input and link it into the next question: \"" + nextQuestion.getQuestion() +
-                "\". Do NOT explain, summarize, or act like a chatbot. Keep descriptions brief. Follow the question as closely " +
-                "as possible but you must be coherent the entire way through.";
+    public String generateNextQuestion(QuestionReq questionReq) {
+        String prompt = "You are a game narrator. Based on the player's most recent action and the upcoming question, write the next scene. " +
+                "Only describe what the player is doing now. Do not add invented events or past experiences. " +
+                "The new scene must directly follow this history:\n\n" +
+                "Player's last answer: " + questionReq.getAnswer() + "\n" +
+                "Previous question: " + questionReq.getQuestionHistory().getLast() + "\n" +
+                "Next question: \"" + questionReq.getNextQuestion() + "\"\n\n" +
+                "Additional instructions:\n" +
+                "- Do not repeat player’s answer.\n" +
+                "- Do not be overly verbose and use everyday language\n" +
+                "- Transition smoothly to the next question.\n" +
+                "- You are to follow the 'additional info' sentences strictly but do not include it in the question. That is for your context\n" +
+                "- If the question gives instructions, follow the instructions of the question is a must\n" +
+                "- There must be no jumps in location. If you want to change the location, there must be a link\n";
         GenerateContentResponse response = client.models.generateContent("gemini-2.0-flash-001", prompt, null);
         return response.text();
     }

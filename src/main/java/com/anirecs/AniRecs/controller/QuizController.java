@@ -1,6 +1,7 @@
 package com.anirecs.AniRecs.controller;
 
 import com.anirecs.AniRecs.questions.Question;
+import com.anirecs.AniRecs.questions.QuestionReq;
 import com.anirecs.AniRecs.service.GeminiService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class QuizController {
 
     // Frontend sends the answer and the next question so chatgpt can figure out how to link them (?)
     @PostMapping("/question")
-    public String getNextQuestion(@RequestBody Question question) {
+    public String getNextQuestion(@RequestBody QuestionReq question) {
         return geminiService.generateNextQuestion(question);
     }
 
