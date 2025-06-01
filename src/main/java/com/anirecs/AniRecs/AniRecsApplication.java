@@ -9,5 +9,4 @@ public class AniRecsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AniRecsApplication.class, args);
 	}
-
 }

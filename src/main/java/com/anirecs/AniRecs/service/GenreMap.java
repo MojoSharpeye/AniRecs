@@ -2,25 +2,25 @@ package com.anirecs.AniRecs.service;
 
 import com.anirecs.AniRecs.database.entities.MalAnime;
 import com.anirecs.AniRecs.database.entities.Genres;
-import com.anirecs.AniRecs.database.entities.KitsuAnime;
-import com.anirecs.AniRecs.database.service.KitsuAnimeService;
+import com.anirecs.AniRecs.database.entities.MalAnimeDatabase;
+import com.anirecs.AniRecs.database.service.MALAnimeService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class GenreMap {
-    private KitsuAnimeService kitsuAnimeService;
+    private MALAnimeService MALAnimeService;
 
-    public GenreMap(KitsuAnimeService kitsuAnimeService) {
-        this.kitsuAnimeService = kitsuAnimeService;
+    public GenreMap(MALAnimeService MALAnimeService) {
+        this.MALAnimeService = MALAnimeService;
     }
 
     public Map<String, List<Double>> genreRatingMap(List<MalAnime> malAnimeList) {
         Map<String, List<Double>> genreRatingMap = new HashMap<>();
 
         for (MalAnime anime : malAnimeList) {
-            KitsuAnime animeDetails = kitsuAnimeService.findByMalId(anime.getAnimeId());
+            MalAnimeDatabase animeDetails = MALAnimeService.findByMalId(anime.getAnimeId());
             if (animeDetails != null) {
                 for (Genres genre : animeDetails.getGenresSet()) {
                    String genreName = genre.getGenreName();
