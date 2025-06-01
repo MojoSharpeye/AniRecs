@@ -38,7 +38,7 @@ public class UserAnimeListService {
             }
 
             JSONObject mainPicture = (JSONObject) animeNode.get("main_picture");
-            String mediumPictureUrl = (String) mainPicture.get("medium");
+            String largePictureUrl = (String) mainPicture.get("large");
 
             int animeId = ((Long) animeNode.get("id")).intValue(); // convert long to int
             String title = (String) animeNode.get("title");
@@ -48,7 +48,7 @@ public class UserAnimeListService {
             int numTimesRewatched = ((Long) animeStatus.get("num_times_rewatched")).intValue();
 
             // Create an Anime object, set the values and add it to the animeList.
-            MalAnime malAnimeObject = new MalAnime(animeId, title, mediumPictureUrl, statusString, score,
+            MalAnime malAnimeObject = new MalAnime(animeId, title, largePictureUrl, statusString, score,
                     episodesWatched, episodeDuration, numTimesRewatched, isNSFW);
 
             animeList.add(malAnimeObject);

@@ -47,18 +47,19 @@ public class ProfileStats {
 
     private String createPersonality (List<String> sortedGenresList) {
         Set<String> edgelordUnwellGenres = new HashSet<>(Arrays.asList(
-                "Horror", "Psychological", "Gore", "Tragedy"));
+                "Gore", "CGDCT", "Mahou Shoujo", "Organized Crime", "Otaku Culture", "Psychological", "Delinquents", "High Stakes Game"));
         Set<String> shounenGenres = new HashSet<>(Arrays.asList(
-                "Action", "Comedy", "Sci-Fi", "Space", "Supernatural", "Sports", "Cars", "Racing",
-                "Martial Arts", "Super Power", "Mecha", "Samurai"));
+                "Action", "Comedy", "Sci-Fi", "Sports", "Combat Sports", "Gag Humor", "Martial Arts", "Mecha",
+                "Parody", "Racing", "Super Power", "Team Sports", "Samurai", "Shounen"));
         Set<String> fantasyGenres = new HashSet<>(Arrays.asList(
-                "Adventure", "Magic", "Fantasy", "Demons", "Isekai"));
+                "Adventure", "Fantasy", "Isekai", "Reincarnation", "Vampire", "Historical", "Mythology"));
         Set<String> hopelessRomanticGenres = new HashSet<>(Arrays.asList(
-                "Romance", "Slice of Life", "School", "Youth", "Family"));
+                "Boys Love", "Girls Love", "Romance", "Slice of Life", "Childcare", "Love Polygon", "Love Status Quo", "Iyashikei",
+                "Mahou Shoujo", "Pets", "School", "Josei", "Shoujo", "Idols (Female)", "Idols (Male)"));
         Set<String> sophisticatedTasteGenres = new HashSet<>(Arrays.asList(
-                "Drama", "Mystery", "Police", "Thriller", "Political", "Mature", "Law"));
+                "Avant Garde", "Drama", "Horror", "Mystery", "Suspense", "Detective", "Educational", "Medical", "Seinen", "Time Travel", "Historical", "Psychological"));
         Set<String> goonerGenres = new HashSet<>(Arrays.asList(
-                "Ecchi", "Harem", "Hentai", "Doujinshi"));
+                "Ecchi", "Erotica", "Hentai", "Anthropomorphic", "Harem", "Magical Sex Shift", "Reverse Harem"));
 
         for (String genre : sortedGenresList) {
             if (edgelordUnwellGenres.contains(genre)) {
