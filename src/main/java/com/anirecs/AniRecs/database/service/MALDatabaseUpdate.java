@@ -15,9 +15,15 @@ public class MALDatabaseUpdate {
     // Get the last page from a file
     public int getLastPage() throws IOException {
         File file = new File("AnimeDbLastPage.txt");
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-
-        return Integer.parseInt(bufferedReader.readLine());
+        
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            return Integer.parseInt(bufferedReader.readLine());
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return 0;
     }
 
     // Updates the database

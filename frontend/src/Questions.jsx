@@ -1,9 +1,19 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query"
-import questions from "./FantasyQuestionsDb";
+import fantasyQuestions from "./QuestionBank/FantasyQuestionsDb";
+import schoolLifeQuestions from "./QuestionBank/SchoolLifeQuestionsDb";
+import { QuestionTypes, WebStates } from "./Enums";
 
-function GetQuestions({ setQuestionVisible, setPersonalityVisible, setQuestionHistory, questionHistory }) {
-  const [question, setQuestion] = useState("You spawn on the streets of a world full of magic and adventure, what is the first thing that you want to do?");
+function GetQuestions({ setWebState, questionType, setQuestionHistory, questionHistory }) {
+  let questionBank;
+
+  if (questionType == QuestionTypes.Fantasy) {
+    questionBank = fantasyQuestions;
+  } else if (questionType = QuestionTypes.SchoolLife) {
+    questionBank = schoolLifeQuestions;
+  }
+
+  const [question, setQuestion] = useState(questionBank[0]);
   const [answer, setAnswer] = useState("Input answer here");
   const [questionIndex, setQuestionIndex] = useState(0);
 
@@ -45,11 +55,10 @@ function GetQuestions({ setQuestionVisible, setPersonalityVisible, setQuestionHi
 
       // If its at the end of the question bank
       // hide the question and show the personality
-      if (nextQuestionIndex >= questions.length) {
-        setQuestionVisible(false);
-        setPersonalityVisible(true);
+      if (nextQuestionIndex >= questionBank.length) {
+        setWebState(WebStates.Personality);
       } else {
-        const nextQuestion = questions[nextQuestionIndex];
+        const nextQuestion = questionBank[nextQuestionIndex];
         
         questionMutation.mutate({ nextQuestion, answer, questionHistory: updatedHistory });
         setAnswer("");

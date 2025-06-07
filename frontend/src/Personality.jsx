@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react";
+import { WebStates } from "./Enums";
 
-function GetPersonality({ setPersonalityVisible, setPersonality, setRecommendationVisible, questionHistory }) {
+function GetPersonality({ setWebState, setPersonality, questionHistory }) {
   const personalityMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("http://localhost:8080/quiz/personality", {
@@ -19,8 +20,7 @@ function GetPersonality({ setPersonalityVisible, setPersonality, setRecommendati
   const handleClick = (event) => {
     event.stopPropagation();
     setPersonality(personalityMutation.data);
-    setRecommendationVisible(true);
-    setPersonalityVisible(false);
+    setWebState(WebStates.Recommendation);
   }
   
   useEffect(() => {
@@ -43,4 +43,4 @@ function GetPersonality({ setPersonalityVisible, setPersonality, setRecommendati
   return null;
 }
 
-export default GetPersonality
+export default GetPersonality;

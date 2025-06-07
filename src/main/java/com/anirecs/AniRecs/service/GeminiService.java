@@ -25,11 +25,12 @@ public class GeminiService {
                 "Next question: \"" + questionReq.getNextQuestion() + "\"\n\n" +
                 "Additional instructions:\n" +
                 "- Do not repeat player’s answer.\n" +
-                "- Do not be overly verbose and use everyday language\n" +
+                "- Do not be overly verbose and use everyday language.\n" +
                 "- Transition smoothly to the next question.\n" +
-                "- You are to follow the 'additional info' sentences strictly but do not include it in the question. That is for your context\n" +
-                "- If the question gives instructions, follow the instructions of the question is a must\n" +
-                "- There must be no jumps in location. If you want to change the location, there must be a link\n";
+                "- You are to follow the 'additional info' sentences strictly but do not include it in the question. That is for your context.\n" +
+                "- Do not include the instruction in the question.\n" +
+                "- If the question gives instructions, follow the instructions of the question is a must.\n" +
+                "- There must be no jumps in location. If you want to change the location, there must be a link.\n";
         GenerateContentResponse response = client.models.generateContent("gemini-2.0-flash-001", prompt, null);
 
         return response.text();

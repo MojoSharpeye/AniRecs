@@ -2,37 +2,46 @@ import { useState } from "react"
 import GetQuestions from "./Questions";
 import GetPersonality from "./Personality";
 import GetRecommendation from "./Recommendation";
+import { WebStates, QuestionTypes } from "./Enums";
+import QuestionBanktype from "./Choices";
 
 function App() {
-  const [questionsVisible, setQuestionVisible] = useState(true);
-  const [personalityVisible, setPersonalityVisible] = useState(false);
-  const [recommendationVisible, setRecommendationVisible] = useState(false);
+  const [webState, setWebState] = useState(WebStates.Choices);
+
+  console.log("webState:", webState);
+
   const [personality, setPersonality] = useState("");
-
   const [questionHistory, setQuestionHistory] = useState([]);
-
+  
+  const [questionType, setQuestionType] = useState(QuestionTypes.Fantasy);
   
   return (
     <div>
-      {questionsVisible && (
+      {webState == WebStates.Choices && (
+        <QuestionBanktype
+          setQuestionType={setQuestionType}
+          setWebState={setWebState}
+        />)
+      }
+
+      {webState == WebStates.Questions && (
         <GetQuestions 
-          setQuestionVisible={setQuestionVisible}
-          setPersonalityVisible={setPersonalityVisible}
+          setWebState={setWebState}
+          questionType={questionType}
           setQuestionHistory={setQuestionHistory}
           questionHistory={questionHistory}
         />)
       }
 
-      {personalityVisible && (
+      {webState == WebStates.Personality && (
         <GetPersonality 
-          setPersonalityVisible={setPersonalityVisible}
+          setWebState={setWebState}
           setPersonality={setPersonality}
-          setRecommendationVisible={setRecommendationVisible}
           questionHistory={questionHistory}
         />)
       }
 
-      {recommendationVisible && (<GetRecommendation personalityDescription={personality}/>)};
+      {webState == WebStates.Recommendation && (<GetRecommendation personalityDescription={personality}/>)}
     </div>
   )
 }

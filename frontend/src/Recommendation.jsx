@@ -4,7 +4,7 @@ import { useEffect } from "react";
 function GetRecommendation({ personalityDescription }) {
     const recMutation = useMutation({
     mutationFn: async () => {
-      const personality = personalityDescription.split(".")[0]; 
+      const personality = personalityDescription.split(/[. ]/)[0];
       console.log(`http://localhost:8080/api/anime/user/${encodeURIComponent(personality)}/precommendation`);
       const res = await fetch(`http://localhost:8080/api/anime/user/${encodeURIComponent(personality)}/precommendation`);
 

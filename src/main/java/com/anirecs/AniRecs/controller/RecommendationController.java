@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -22,20 +21,19 @@ public class RecommendationController {
     private final UserAnimeListService userAnimeListService;
     private final ProfileStats profileStats;
     private final RecommendationService recommendationService;
-    private final GenreMap genreMap;
 
     public RecommendationController(UserAnimeListService userAnimeListService, ProfileStats profileStats,
                                     RecommendationService recommendationService, GenreMap genreMap) {
         this.userAnimeListService = userAnimeListService;
         this.profileStats = profileStats;
         this.recommendationService = recommendationService;
-        this.genreMap = genreMap;
     }
 
     @GetMapping("/user/{username}")
     public ResponseEntity<Profile> getUserAnime(@PathVariable String username) {
         // TODO: is this the right way to deal with errors on the site?
         List<MalAnime> anime = userAnimeListService.createUserAnimeList(username);
+        
         if(anime == null || anime.isEmpty()) return ResponseEntity.badRequest().build();
 
         Profile profile = profileStats.profileStats(anime, username);

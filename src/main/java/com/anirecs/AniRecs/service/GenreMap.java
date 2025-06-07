@@ -25,7 +25,7 @@ public class GenreMap {
                 for (Genres genre : animeDetails.getGenresSet()) {
                    String genreName = genre.getGenreName();
                    double score = anime.getScore();
-                   (genreRatingMap.computeIfAbsent(genreName, (key) -> new ArrayList<>())).add(score);
+                   (genreRatingMap.computeIfAbsent(genreName, (_) -> new ArrayList<>())).add(score);
                 }
             }
         }
