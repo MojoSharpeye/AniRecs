@@ -1,14 +1,13 @@
 import { useState } from "react"
+import QuestionBanktype from "./Path";
 import GetQuestions from "./Questions";
 import GetPersonality from "./Personality";
 import GetRecommendation from "./Recommendation";
 import { WebStates, QuestionTypes } from "./Enums";
-import QuestionBanktype from "./Choices";
+import "./Apps.css"
 
 function App() {
   const [webState, setWebState] = useState(WebStates.Choices);
-
-  console.log("webState:", webState);
 
   const [personality, setPersonality] = useState("");
   const [questionHistory, setQuestionHistory] = useState([]);
@@ -16,7 +15,7 @@ function App() {
   const [questionType, setQuestionType] = useState(QuestionTypes.Fantasy);
   
   return (
-    <div>
+    <div className="apps-container">
       {webState == WebStates.Choices && (
         <QuestionBanktype
           setQuestionType={setQuestionType}

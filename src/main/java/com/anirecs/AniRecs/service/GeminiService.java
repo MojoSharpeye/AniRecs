@@ -45,8 +45,9 @@ public class GeminiService {
                 "hopelessRomanticGenres = Romance, Slice of Life, School, Youth, Family\n" +
                 "sophisticatedTasteGenres = Drama, Mystery, Police, Thriller, Political, Mature, Law\n" +
                 "goonerGenres = Ecchi, Harem, Hentai, Doujinshi" +
-                "Reply ONLY what personality in the 5 personalities the user input sounds like and give a short explanation why. if the user input" +
-                "doesnt give an idea of their personality just type \"ERROR\"" +
+                "Reply ONLY what personality in the 5 personalities the user input sounds like and give a short explanation why. " +
+                "Also reply in the exact format of Personality: (input their personality here) Explaination: (input explaination here). " +
+                "If the user input doesn't give an idea of their personality just type \"ERROR\"" +
                 "Here are the user's responses to the quiz:\n\n");
 
         for (int i = 0; i < answers.size(); i++) {

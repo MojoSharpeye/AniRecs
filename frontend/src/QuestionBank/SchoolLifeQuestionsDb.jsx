@@ -1,5 +1,5 @@
 const schoolLifeQuestions = [
-    "You hear the alarms ring and woke up for the morning. Whats the first thing that you would wanna do? " + 
+    "You hear the alarms ring and woke up for the morning. Whats the first thing that you would wanna do? ",
     
     "You start heading to school and on the way, you see your friend accross the road. How would you approach him? ",
 

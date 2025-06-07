@@ -1,0 +1,17 @@
+.questions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    
+    height: 450px;
+    width: 400px;
+
+    word-wrap: break-word;
+    text-align: center;    
+    color: white;
+}
+
+.questions-textbox {
+    width: 200px;
+}

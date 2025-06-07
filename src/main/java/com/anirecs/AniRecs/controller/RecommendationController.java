@@ -53,8 +53,8 @@ public class RecommendationController {
         return recommendation;
     }
 
-    @GetMapping("/user/{personality}/precommendation")
-    public List<String> getRecommendationNoUser(@PathVariable String personality) {
+    @GetMapping("/user/precommendation")
+    public List<String> getRecommendationNoUser(@RequestParam String personality) {
         long startTime = System.nanoTime();
 
         List<MalAnimeDatabase> reccList = recommendationService.getAnimeListWithPersonality(personality);

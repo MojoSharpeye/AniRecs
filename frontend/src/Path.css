@@ -1,0 +1,17 @@
+.path-choices-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.path-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.path-buttons {
+    padding: 25px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}

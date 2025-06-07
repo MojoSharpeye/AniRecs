@@ -30,7 +30,7 @@ function GetPersonality({ setWebState, setPersonality, questionHistory }) {
   if (personalityMutation.isSuccess) {
     return( 
       <div>
-          <div>Personality: {personalityMutation.data}</div>;
+          <div>{personalityMutation.data}</div>;
           <button onClick={(event) => handleClick(event)}>Click here for your recommendation</button>;
       </div>
     );

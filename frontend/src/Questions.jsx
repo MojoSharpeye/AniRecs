@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 import fantasyQuestions from "./QuestionBank/FantasyQuestionsDb";
 import schoolLifeQuestions from "./QuestionBank/SchoolLifeQuestionsDb";
 import { QuestionTypes, WebStates } from "./Enums";
+import "./Questions.css"
 
 function GetQuestions({ setWebState, questionType, setQuestionHistory, questionHistory }) {
   let questionBank;
@@ -29,12 +30,6 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
           answer,
           questionHistory
         }),
-      });
-
-      console.log({
-        nextQuestion,
-        answer,
-        questionHistory
       });
 
       return res.text();
@@ -71,13 +66,15 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
   }
 
   return(
-    <div>
+    <div className="questions-container">
+      {question}
+
       <input 
+        className="questions-textbox"
         onChange={textChange} 
         value = {answer}
         onKeyDown={submit}
-      />
-      {question}
+      /> 
     </div>
   );
 }

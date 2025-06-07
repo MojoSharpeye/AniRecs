@@ -78,17 +78,24 @@ public class RecommendationService {
     }
 
     private List<String> getGenresByPersonality(String personality) {
-        return switch (personality.toUpperCase()) {
-            case "EDGELORD/UNWELL" -> Arrays.asList("Horror", "Psychological", "Gore", "Tragedy");
-            case "SHOUNEN" -> Arrays.asList("Action", "Comedy", "Sci-Fi", "Space", "Supernatural", "Sports",
+        String upperPersonality = personality.toUpperCase();
+
+        if (upperPersonality.contains("EDGELORD") || upperPersonality.contains("UNWELL")) {
+            return Arrays.asList("Horror", "Psychological", "Gore", "Tragedy");
+        } else if (upperPersonality.contains("SHOUNEN")) {
+            return Arrays.asList("Action", "Comedy", "Sci-Fi", "Space", "Supernatural", "Sports",
                     "Cars", "Racing", "Martial Arts", "Super Power", "Mecha", "Samurai");
-            case "FANTASY" -> Arrays.asList("Adventure", "Magic", "Fantasy", "Demons", "Isekai");
-            case "HOPELESS ROMANTIC" -> Arrays.asList("Romance", "Slice of Life", "School", "Youth", "Family");
-            case "SOPHISTICATED TASTE" ->
-                    Arrays.asList("Drama", "Mystery", "Police", "Thriller", "Political", "Mature", "Law");
-            case "MASTER GOONER" -> Arrays.asList("Ecchi", "Harem", "Hentai", "Doujinshi");
-            default -> Collections.emptyList();
-        };
+        } else if (upperPersonality.contains("FANTASY")) {
+            return Arrays.asList("Adventure", "Magic", "Fantasy", "Demons", "Isekai");
+        } else if (upperPersonality.contains("HOPELESS") || upperPersonality.contains("ROMANTIC")) {
+            return Arrays.asList("Romance", "Slice of Life", "School", "Youth", "Family");
+        } else if (upperPersonality.contains("SOPHISTICATED") || upperPersonality.contains("TASTE")) {
+            return Arrays.asList("Drama", "Mystery", "Police", "Thriller", "Political", "Mature", "Law");
+        } else if (upperPersonality.contains("MASTER") || upperPersonality.contains("GOONER")) {
+            return Arrays.asList("Ecchi", "Harem", "Hentai", "Doujinshi");
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     // Gets the highest rated anime with the most watched genre
