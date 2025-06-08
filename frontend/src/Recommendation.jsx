@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react";
+import styles from './Recommendation.module.css'
 
 function GetRecommendation({ personalityDescription }) {
     const recMutation = useMutation({
@@ -18,25 +19,25 @@ function GetRecommendation({ personalityDescription }) {
 
   if (recMutation.isSuccess) {
     return (
-        <div>
+        <div className={styles.rec}>
             <h2>Anime Recommendations</h2>
-            <ul>
+            <div className={styles.recommendationList}>
             {recMutation.data.map((anime) => (
-                <li key={anime.malId}>
+                <div key={anime.malId} className={styles.recommendationItem}>
                 <h3>{anime.animeTitle}</h3>
-                <p>Rating: {anime.averageRating}</p>
-                <p>Episodes: {anime.episodeCount}</p>
-                <p>Status: {anime.status}</p>
+                <p><strong>Rating:</strong> {anime.averageRating}</p>
+                <p><strong>Episodes:</strong> {anime.episodeCount}</p>
+                <p><strong>Status:</strong> {anime.status}</p>
                 <img
                     src={anime.posterUrl}
                     alt={anime.animeTitle}
-                    style={{ width: "100px", height: "auto" }}
+                    className={styles.animePoster}
                 />
-                <p>Genres: {anime.genreNames.join(", ")}</p> {/* Display genres */}
+                <p><strong>Genres:</strong> {anime.genreNames.join(", ")}</p>
                 <p>{anime.synopsis}</p>
-                </li>
+                </div>
             ))}
-            </ul>
+            </div>
         </div>
     );
   }
