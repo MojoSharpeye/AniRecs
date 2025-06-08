@@ -32,6 +32,7 @@ function GetRecommendation({ personalityDescription }) {
                     alt={anime.animeTitle}
                     style={{ width: "100px", height: "auto" }}
                 />
+                <p>Genres: {anime.genreNames.join(", ")}</p> {/* Display genres */}
                 <p>{anime.synopsis}</p>
                 </li>
             ))}
