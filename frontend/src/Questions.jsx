@@ -15,7 +15,7 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
   }
 
   const [question, setQuestion] = useState(questionBank[0]);
-  const [answer, setAnswer] = useState("Input answer here");
+  const [answer, setAnswer] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const questionMutation = useMutation({
@@ -42,6 +42,7 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
 
   const submit = (event) => {
     if (event.key == "Enter") {
+        event.preventDefault();
       const updatedHistory = [...questionHistory, { question, answer }];
       setQuestionHistory(updatedHistory);
 
@@ -69,11 +70,13 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
     <div className="questions-container">
       {question}
 
-      <input 
+      <textarea
         className="questions-textbox"
         onChange={textChange} 
         value = {answer}
         onKeyDown={submit}
+        placeHolder="Input Text Here"
+        maxLength={280}
       /> 
     </div>
   );

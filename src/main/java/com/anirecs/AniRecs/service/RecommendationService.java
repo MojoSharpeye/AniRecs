@@ -73,8 +73,13 @@ public class RecommendationService {
         return null;
     }
 
-    public List<MalAnimeDatabase> getAnimeListWithPersonality(String personality) {
-        return MALAnimeService.findAnimesByGenreNameList(getGenresByPersonality(personality));
+    public List<MalAnimeRecommendation> getAnimeListWithPersonality(String personality) {
+        List<MalAnimeDatabase> animeListDatabase = MALAnimeService.findAnimesByGenreNameList(getGenresByPersonality(personality));
+        List<MalAnimeRecommendation> animeList = new ArrayList<>();
+        for (MalAnimeDatabase anime: animeListDatabase){
+            animeList.add(anime.toRecommendation());
+        }
+        return animeList;
     }
 
     private List<String> getGenresByPersonality(String personality) {

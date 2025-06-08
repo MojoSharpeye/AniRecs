@@ -17,7 +17,27 @@ function GetRecommendation({ personalityDescription }) {
   }, []);
 
   if (recMutation.isSuccess) {
-    return <div>Recommendation: {recMutation.data}</div>;
+    return (
+        <div>
+            <h2>Anime Recommendations</h2>
+            <ul>
+            {recMutation.data.map((anime) => (
+                <li key={anime.malId}>
+                <h3>{anime.animeTitle}</h3>
+                <p>Rating: {anime.averageRating}</p>
+                <p>Episodes: {anime.episodeCount}</p>
+                <p>Status: {anime.status}</p>
+                <img
+                    src={anime.posterUrl}
+                    alt={anime.animeTitle}
+                    style={{ width: "100px", height: "auto" }}
+                />
+                <p>{anime.synopsis}</p>
+                </li>
+            ))}
+            </ul>
+        </div>
+    );
   }
 
   if (recMutation.isLoading) {

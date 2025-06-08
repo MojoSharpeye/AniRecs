@@ -1,9 +1,6 @@
 package com.anirecs.AniRecs.controller;
 
-import com.anirecs.AniRecs.database.entities.MalAnime;
-import com.anirecs.AniRecs.database.entities.MalAnimeDatabase;
-import com.anirecs.AniRecs.database.entities.Profile;
-import com.anirecs.AniRecs.database.entities.Recommendation;
+import com.anirecs.AniRecs.database.entities.*;
 import com.anirecs.AniRecs.service.GenreMap;
 import com.anirecs.AniRecs.service.ProfileStats;
 import com.anirecs.AniRecs.service.RecommendationService;
@@ -54,23 +51,17 @@ public class RecommendationController {
     }
 
     @GetMapping("/user/precommendation")
-    public List<String> getRecommendationNoUser(@RequestParam String personality) {
+    public List<MalAnimeRecommendation> getRecommendationNoUser(@RequestParam String personality) {
         long startTime = System.nanoTime();
 
-        List<MalAnimeDatabase> reccList = recommendationService.getAnimeListWithPersonality(personality);
+        List<MalAnimeRecommendation> reccList = recommendationService.getAnimeListWithPersonality(personality);
 
-        List<String> titles = new ArrayList<>();
-        for (int i = 0; i < 5; i ++) {
-            MalAnimeDatabase anime = reccList.get(i);
-            System.out.println(anime.getAnimeTitle());
-            System.out.println();
-            titles.add(anime.getAnimeTitle());
-        }
+        System.out.println(reccList);
 
         long endTime = System.nanoTime();
         long durationInMillis = (endTime - startTime) / 1_000_000;
         System.out.println("Execution time for getRecommendation: " + durationInMillis + " ms");
 
-        return titles;
+        return reccList.subList(0, 5);
     }
 }
