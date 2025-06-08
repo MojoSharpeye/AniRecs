@@ -62,6 +62,6 @@ public class RecommendationController {
         long durationInMillis = (endTime - startTime) / 1_000_000;
         System.out.println("Execution time for getRecommendation: " + durationInMillis + " ms");
 
-        return reccList.subList(0, 5);
+        return reccList;
     }
 }

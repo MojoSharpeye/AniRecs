@@ -74,7 +74,7 @@ public class RecommendationService {
     }
 
     public List<MalAnimeRecommendation> getAnimeListWithPersonality(String personality) {
-        List<MalAnimeDatabase> animeListDatabase = MALAnimeService.findAnimesByGenreNameList(getGenresByPersonality(personality));
+        List<MalAnimeDatabase> animeListDatabase = (MALAnimeService.findAnimesByGenreNameList(getGenresByPersonality(personality))).subList(0, 5);
         List<MalAnimeRecommendation> animeList = new ArrayList<>();
         for (MalAnimeDatabase anime: animeListDatabase){
             animeList.add(anime.toRecommendation());
