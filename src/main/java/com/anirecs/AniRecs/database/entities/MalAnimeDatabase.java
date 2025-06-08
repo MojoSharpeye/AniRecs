@@ -43,6 +43,32 @@ public class MalAnimeDatabase {
         genre.getAnimeDetails().add(this);
     }
 
+    public Set<String> getGenreNames() {
+        Set<String> genreNames = new HashSet<>();
+        for (Genres genre : genresSet) {
+            genreNames.add(genre.getGenreName());
+        }
+        return genreNames;
+    }
+
+    public MalAnimeRecommendation toRecommendation(){
+        Set<String> genreNames = this.getGenreNames();
+
+        return new MalAnimeRecommendation(
+                this.malId,
+                this.animeTitle,
+                this.averageRating,
+                this.episodeCount,
+                this.status,
+                this.posterUrl,
+                this.averageEpDuration,
+                this.showType,
+                this.startDate,
+                genreNames,
+                this.synopsis
+        );
+    }
+
     public void removeGenre(Genres genre) {
         genre.getAnimeDetails().remove(this);
         genresSet.remove((genre));

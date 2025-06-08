@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Recommendation {
-    String animeWithTop5Genre;
-    String mostWatchedGenre;
-    String highestRatedGenre;
-    String lowestRatedGenre;
-    String randomGenre;
+    MalAnimeRecommendation top5GenreAnime;
+    MalAnimeRecommendation mostWatchedGenreAnime;
+    MalAnimeRecommendation highestRatedGenreAnime;
+    MalAnimeRecommendation lowestRatedGenreAnime;
+    MalAnimeRecommendation randomGenreAnime;
 }

@@ -46,11 +46,11 @@ public class RecommendationService {
         MalAnimeDatabase randomGenreRec = getAnimeWithRandomGenre(userMalIds, recMalIds);
 
         return new Recommendation(
-            animeWithTop5GenreRec.getAnimeTitle(),
-            mostWatchedGenreRec.getAnimeTitle(),
-            highestHighestRatedGenreRec.getAnimeTitle(),
-            lowestRatedGenreRec.getAnimeTitle(),
-            randomGenreRec.getAnimeTitle()
+            animeWithTop5GenreRec.toRecommendation(),
+            mostWatchedGenreRec.toRecommendation(),
+            highestHighestRatedGenreRec.toRecommendation(),
+            lowestRatedGenreRec.toRecommendation(),
+            randomGenreRec.toRecommendation()
         );
     }
 

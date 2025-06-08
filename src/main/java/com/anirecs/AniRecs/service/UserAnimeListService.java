@@ -15,64 +15,56 @@ import java.util.Scanner;
 
 @Service
 public class UserAnimeListService {
-    // Creates a list of all watched animes
+    // Creates a list of all watched anime
     public List<MalAnime> createUserAnimeList(String username) {
-        JSONArray userAnimeList = getUserAnimeJSON(username);
-        if (userAnimeList == null) return null;
-        if (!hasRatedAnime(userAnimeList)) return null;
-
-        // Convert the JSONArray, into an AnimeList for ease of use.
         List<MalAnime> animeList = new ArrayList<>();
-        for (Object obj : userAnimeList) {
-            JSONObject anime = (JSONObject) obj;
-            JSONObject animeNode = (JSONObject) anime.get("node");
-            JSONObject animeStatus = (JSONObject) anime.get("list_status");
+        String nextPageUrl = "https://api.myanimelist.net/v2/users/" + username + "/animelist?limit=1000&sort=list_score&fields=list_status{num_times_rewatched},average_episode_duration,nsfw=true";
 
-            // Extract the data from the JSON
-            int score = ((Long) animeStatus.get("score")).intValue();
-            if (score == 0) continue; // skip invalid scores
+        while (nextPageUrl != null) {
+            JSONObject resultsJSONObj = getUserAnimeObject(nextPageUrl);
+            JSONArray userAnimeList = getUserAnimeList(resultsJSONObj);
+            if (userAnimeList == null) return null;
 
-            boolean isNSFW = false;
-            if ("gray".equals(animeNode.get("nsfw")) || "black".equals(animeNode.get("nsfw"))) {
-                isNSFW = true;
+            // Convert the JSONArray, into an AnimeList for ease of use.
+            for (Object obj : userAnimeList) {
+                JSONObject anime = (JSONObject) obj;
+                JSONObject animeNode = (JSONObject) anime.get("node");
+                JSONObject animeStatus = (JSONObject) anime.get("list_status");
+
+                // Extract the data from the JSON
+                int score = ((Long) animeStatus.get("score")).intValue();
+                if (score == 0) continue; // skip invalid scores
+
+                boolean isNSFW = false;
+                if ("gray".equals(animeNode.get("nsfw")) || "black".equals(animeNode.get("nsfw"))) {
+                    isNSFW = true;
+                }
+
+                JSONObject mainPicture = (JSONObject) animeNode.get("main_picture");
+                String largePictureUrl = (String) mainPicture.get("large");
+
+                int animeId = ((Long) animeNode.get("id")).intValue(); // convert long to int
+                String title = (String) animeNode.get("title");
+                String statusString = (String) animeStatus.get("status");  // Completed, Watching, etc.
+                int episodesWatched = ((Long) animeStatus.get("num_episodes_watched")).intValue();  // convert long to int
+                int episodeDuration = ((Long) animeNode.get("average_episode_duration")).intValue();
+                int numTimesRewatched = ((Long) animeStatus.get("num_times_rewatched")).intValue();
+
+                // Create an Anime object, set the values and add it to the animeList.
+                MalAnime malAnimeObject = new MalAnime(animeId, title, largePictureUrl, statusString, score,
+                        episodesWatched, episodeDuration, numTimesRewatched, isNSFW);
+
+                animeList.add(malAnimeObject);
             }
-
-            JSONObject mainPicture = (JSONObject) animeNode.get("main_picture");
-            String mediumPictureUrl = (String) mainPicture.get("medium");
-
-            int animeId = ((Long) animeNode.get("id")).intValue(); // convert long to int
-            String title = (String) animeNode.get("title");
-            String statusString = (String) animeStatus.get("status");  // Completed, Watching, etc.
-            int episodesWatched = ((Long) animeStatus.get("num_episodes_watched")).intValue();  // convert long to int
-            int episodeDuration = ((Long) animeNode.get("average_episode_duration")).intValue();
-            int numTimesRewatched = ((Long) animeStatus.get("num_times_rewatched")).intValue();
-
-            // Create an Anime object, set the values and add it to the animeList.
-            MalAnime malAnimeObject = new MalAnime(animeId, title, mediumPictureUrl, statusString, score,
-                    episodesWatched, episodeDuration, numTimesRewatched, isNSFW);
-
-            animeList.add(malAnimeObject);
+            if (animeList.isEmpty()) return null;
+            //if there is a next page then update the URL and fetch again
+            nextPageUrl = getNextPageUrl(resultsJSONObj);
         }
 
         return animeList;
     }
 
-    private static boolean hasRatedAnime(JSONArray userAnimeList) {
-        for (int i = 0; i < userAnimeList.size(); i++) {
-            JSONObject anime = (JSONObject) userAnimeList.get(i);
-            JSONObject animeStatus = (JSONObject) anime.get("list_status");
-
-            long score = (long) animeStatus.get("score");
-            if (score != 0) return true;
-        }
-        System.out.println("You have not scored anything!");
-        return false;
-    }
-
-    private JSONArray getUserAnimeJSON(String username) {
-        //might want to make an array, for going to the next page. limit 1000, might be limiting?
-        String urlString = "https://api.myanimelist.net/v2/users/" + username + "/animelist?limit=1000&sort=list_score&fields=list_status{num_times_rewatched},average_episode_duration,nsfw=true";
-
+    private JSONObject getUserAnimeObject(String urlString) {
         try {
             HttpURLConnection apiConnection = fetchApiResponse(urlString);
 
@@ -83,17 +75,22 @@ public class UserAnimeListService {
             JSONParser parser = new JSONParser();
             JSONObject resultsJsonObj = (JSONObject) parser.parse(jsonResponse);
 
-            JSONArray userAnimeList = (JSONArray) resultsJsonObj.get("data");
-
-            if(userAnimeList.isEmpty()) return null;
-
-            return userAnimeList;
-
-
+            return resultsJsonObj;
         } catch (Exception e){
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String getNextPageUrl(JSONObject resultsJsonObj){
+        JSONObject pagingObj = (JSONObject) resultsJsonObj.get("paging");
+
+        if (pagingObj == null) return null;
+        return (String) pagingObj.get("next");
+    }
+
+    private JSONArray getUserAnimeList (JSONObject resultsJsonObj) {
+        return (JSONArray) resultsJsonObj.get("data");
     }
 
     @Value("${app.api.key}")
