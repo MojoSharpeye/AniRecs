@@ -14,6 +14,7 @@ public class Profile {
     String personality;
     int numberAnimeWatched;
     double hoursWatched;
+    double avgScore;
 
     MalAnime highestRatedMalAnime;
     List<MalAnime> top5MalAnime;

@@ -22,9 +22,13 @@ public class ProfileStats {
         String personality = createPersonality(sortedGenresList);
 
         double totalHours = 0;
+        double avgScore = 0;
         for (MalAnime anime : malAnimeList) {
+            avgScore += anime.getScore();
             totalHours += anime.getHoursWatched();
         }
+
+        avgScore = avgScore / malAnimeList.size();
 
         // Get the size of the sublist
         int sublistSize = Math.min(malAnimeList.size(), 5);
@@ -36,6 +40,7 @@ public class ProfileStats {
                 personality,
                 malAnimeList.size(),
                 totalHours,
+                avgScore,
                 malAnimeList.getFirst(), // assuming animeList is not empty
                 malAnimeList.subList(0, sublistSize), // prevent out-of-bounds
                 mostWatchedGenre,
