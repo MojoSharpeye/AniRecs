@@ -52,18 +52,19 @@ public class ProfileStats {
 
     private String createPersonality (List<String> sortedGenresList) {
         Set<String> edgelordUnwellGenres = new HashSet<>(Arrays.asList(
-                "Horror", "Psychological", "Gore", "Tragedy"));
+                "Psychological", "Gore", "Survival", "CGDCT", "Otaku Culture", "Organized Crime", "Mahou Shoujo", "Idols(Female)", "Idols(Male)"));
         Set<String> shounenGenres = new HashSet<>(Arrays.asList(
-                "Action", "Comedy", "Sci-Fi", "Space", "Supernatural", "Sports", "Cars", "Racing",
-                "Martial Arts", "Super Power", "Mecha", "Samurai"));
+                "Shounen", "Action", "Sci-Fi", "Comedy", "Gag Humor", "Parody", "Samurai", "Mecha", "Super Power", "Combat Sports", "Sports",
+                "Team Sports", "Martial Arts", "Racing", "Kids"));
         Set<String> fantasyGenres = new HashSet<>(Arrays.asList(
-                "Adventure", "Magic", "Fantasy", "Demons", "Isekai"));
+                "Adventure", "Fantasy", "Vampire", "Mythology", "Urban Fantasy", "Reincarnation", "Isekai", "Villainess"));
         Set<String> hopelessRomanticGenres = new HashSet<>(Arrays.asList(
-                "Romance", "Slice of Life", "School", "Youth", "Family"));
+                "Romance", "School", "Shoujo", "Childcare", "CGDCT", "Iyashikei", "Slice of Life", "Josei", "Love Polygon", "Workplace",
+                "Performing Arts", "Gourmet", "Showbiz", "Avant Garde", "Mahou Shoujo", "Love Status Quo", "Boys Love", "Girls Love","Visual Arts", "Pets"));
         Set<String> sophisticatedTasteGenres = new HashSet<>(Arrays.asList(
-                "Drama", "Mystery", "Police", "Thriller", "Political", "Mature", "Law"));
+                "Drama", "Military", "Suspense", "Time Travel", "Historical","Seinen", "Mystery", "Medical", "Detective", "Horror", "High Stakes Game"));
         Set<String> goonerGenres = new HashSet<>(Arrays.asList(
-                "Ecchi", "Harem", "Hentai", "Doujinshi"));
+                "Anthropomorphic", "Ecchi", "Harem", "Reverse Harem", "Crossdressing", "Magical Sex Shift", "Hentai", "Erotica"));
 
         for (String genre : sortedGenresList) {
             if (edgelordUnwellGenres.contains(genre)) {
