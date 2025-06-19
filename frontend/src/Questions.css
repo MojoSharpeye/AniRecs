@@ -4,21 +4,31 @@
     align-items: center;
     gap: 15px;
     
-    height: 450px;
-    width: 400px;
+    height: 400px;
+    width: 1200px;
 
     word-wrap: break-word;
-    text-align: center;    
-    color: white;
+    text-align: center;   
+    font-size: 40px; 
 }
 
 .questions-textbox {
     font-family: arial;
-    width: 100%;
-    height: 120px; /* Height for 5 lines */
+
+    width: 80%;
+    height: 120px;
+
     padding: 10px;
-    font-size: 16px;
-    line-height: 1.5; /* Line spacing */
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    font-size: 30px;
+    line-height: 1.5; 
+    background-color: transparent;
+    resize: none;
+    border: none;
+    caret-color: white;
+
+    color: aliceblue;
+}
+
+.questions-textbox:focus {
+    outline: none;
 }

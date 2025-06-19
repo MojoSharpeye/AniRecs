@@ -3,7 +3,7 @@
     "concurrently": "^9.1.2"
   },
   "scripts": {
-    "server": "set API_KEY=4f7f4207f280391d1413a3385ece22a5 && set GOOGLE_API_KEY=AIzaSyDtTw94IHT8hRoRMPTT1Bv1Z3_zg2ERtNM && mvnw spring-boot:run",
+    "server": "set API_KEY=4f7f4207f280391d1413a3385ece22a5 && set GOOGLE_API_KEY=AIzaSyBZZstQY3gtHHgjS5MNn4k1J4TRBXsi0g8 && mvnw spring-boot:run",
     "client": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   }

@@ -7,5 +7,6 @@ export const WebStates = Object.freeze({
 
 export const QuestionTypes = Object.freeze({
     Fantasy: 'fantasy',
-    SchoolLife: 'school life'
+    SchoolLife: 'school life',
+    Cyberpunk: 'cyberpunk'
 });

@@ -6,7 +6,6 @@ function GetRecommendation({ personalityDescription }) {
     const recMutation = useMutation({
     mutationFn: async () => {
       const personality = personalityDescription.split(" ").slice(0, 3).join(" ");
-      console.log(`http://localhost:8080/api/anime/user/precommendation?personality=${encodeURIComponent(personality)}`);
       const res = await fetch(`http://localhost:8080/api/anime/user/precommendation?personality=${encodeURIComponent(personality)}`);
 
       return res.json();

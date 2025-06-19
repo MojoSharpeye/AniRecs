@@ -41,8 +41,8 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
   })
 
   const submit = (event) => {
-    if (event.key == "Enter") {
-        event.preventDefault();
+    if (event.key == "Enter" && answer.trim() !== "") {
+      event.preventDefault();
       const updatedHistory = [...questionHistory, { question, answer }];
       setQuestionHistory(updatedHistory);
 

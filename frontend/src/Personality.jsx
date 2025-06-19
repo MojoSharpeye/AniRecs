@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react";
 import { WebStates } from "./Enums";
+import "./Personality.css"
 
 function GetPersonality({ setWebState, setPersonality, questionHistory }) {
   const personalityMutation = useMutation({
@@ -28,10 +29,16 @@ function GetPersonality({ setWebState, setPersonality, questionHistory }) {
   }, []);
 
   if (personalityMutation.isSuccess) {
-    return( 
-      <div>
-          <div>{personalityMutation.data}</div>;
-          <button onClick={(event) => handleClick(event)}>Click here for your recommendation</button>;
+    const rawData = personalityMutation.data;
+
+    const personality = rawData.split("Personality:")[1]?.split("Explaination:")[0]?.trim();
+    const explaination = rawData.split("Explaination:")[1]?.trim();
+
+    return (
+      <div className="personality-textbox">
+        <h2>{personality}</h2>
+        <p>{explaination}</p>
+        <button onClick={(event) => handleClick(event)}>Click here for your recommendations</button>
       </div>
     );
   }

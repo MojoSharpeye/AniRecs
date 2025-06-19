@@ -1,5 +1,8 @@
 body {
-    background-color: rgb(46, 46, 46);
+    background-color: rgb(20, 20, 20);
+    color: aliceblue;
+    
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
 }
 
 .apps-container {
