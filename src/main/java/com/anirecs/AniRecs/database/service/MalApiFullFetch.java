@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -73,8 +75,9 @@ public class MalApiFullFetch {
 
     // I changed the format to throw IOException so we don't have to do try & catch (prettier code)
     // Helper function that builds the fetch request
-    private HttpURLConnection fetchApiResponse(String urlString) throws IOException {
-        URL url = new URL(urlString);
+    private HttpURLConnection fetchApiResponse(String urlString) throws IOException, URISyntaxException {
+        URI uri = new URI(urlString);
+        URL url = uri.toURL();
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("X-MAL-CLIENT-ID", apiKey);

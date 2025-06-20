@@ -34,7 +34,7 @@ public class ProfileStats {
         int sublistSize = Math.min(malAnimeList.size(), 5);
         int genreSublistSize = Math.min(sortedGenresList.size(), 5);
 
-        // TODO: maybe put rewatches into account for sorting the highest rated anime
+        // TODO: Maybe put rewatches into account for sorting the highest rated anime
         return new Profile(
                 name,
                 personality,

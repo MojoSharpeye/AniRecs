@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
@@ -98,14 +100,15 @@ public class UserAnimeListService {
 
     private HttpURLConnection fetchApiResponse(String urlString) {
         try {
-            URL url = new URL(urlString);
+            URI uri = new URI(urlString);
+            URL url = uri.toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("GET");
             conn.setRequestProperty("X-MAL-CLIENT-ID", apiKey);
 
             return conn;
-        }catch(java.io.IOException e){
+        } catch(java.io.IOException | URISyntaxException e){
             e.printStackTrace();
         }
 

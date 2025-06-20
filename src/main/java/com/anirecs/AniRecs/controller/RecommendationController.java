@@ -27,7 +27,7 @@ public class RecommendationController {
 
     @GetMapping("/user/{username}")
     public ResponseEntity<Profile> getUserAnime(@PathVariable String username) {
-        // TODO: is this the right way to deal with errors on the site?
+        // TODO: Check if this is the right way to deal with errors on the site
         List<MalAnime> anime = userAnimeListService.createUserAnimeList(username);
         
         if(anime == null || anime.isEmpty()) return ResponseEntity.badRequest().build();

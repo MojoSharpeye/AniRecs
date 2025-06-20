@@ -17,6 +17,7 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
   const [question, setQuestion] = useState(questionBank[0]);
   const [answer, setAnswer] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
+  const [progress, setProgress] = useState(1 / questionBank.length * 100);
 
   const questionMutation = useMutation({
     mutationFn: async ({nextQuestion, answer, questionHistory}) => {
@@ -56,6 +57,8 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
       } else {
         const nextQuestion = questionBank[nextQuestionIndex];
         
+        setProgress((nextQuestionIndex + 1) / questionBank.length * 100);
+        
         questionMutation.mutate({ nextQuestion, answer, questionHistory: updatedHistory });
         setAnswer("");
       }
@@ -78,6 +81,12 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
         placeHolder="Input Text Here"
         maxLength={280}
       /> 
+
+      <div className="progress-bar">
+        <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
+      </div>
+
+      <button></button>
     </div>
   );
 }

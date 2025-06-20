@@ -19,7 +19,6 @@ public class MALDatabaseUpdate {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             return Integer.parseInt(bufferedReader.readLine());
         } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         

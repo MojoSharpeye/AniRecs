@@ -4,9 +4,10 @@
     align-items: center;
     gap: 15px;
     
-    height: 400px;
-    width: 1200px;
+    height: 100vh;
+    width: 60%;
 
+    margin-top: 30%;
     word-wrap: break-word;
     text-align: center;   
     font-size: 40px; 
@@ -16,7 +17,7 @@
     font-family: arial;
 
     width: 80%;
-    height: 120px;
+    height: 60%;
 
     padding: 10px;
     font-size: 30px;
@@ -31,4 +32,19 @@
 
 .questions-textbox:focus {
     outline: none;
+}
+
+.progress-bar {
+    width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(255, 195, 127);
+    margin-bottom: 35%;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    background-color: aquamarine;
+    transition: width 0.5s ease-out;
 }
