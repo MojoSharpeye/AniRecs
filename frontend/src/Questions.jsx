@@ -57,7 +57,7 @@ function GetQuestions({ setWebState, worldTypes, setQuestionHistory, questionHis
     }
   }
 
-  const handleChoice = (choice) => {
+  const handleChoice = (answer) => {
     const updatedHistory = [...questionHistory, { question: question.question, answer }];
     setQuestionHistory(updatedHistory);
 
@@ -74,9 +74,7 @@ function GetQuestions({ setWebState, worldTypes, setQuestionHistory, questionHis
       setProgress(nextQuestionIndex / questionBank.length * 100);
       
       const nextQuestion = questionBank[nextQuestionIndex].question;
-      console.log(nextQuestion);
-      console.log(choice);
-      questionMutation.mutate({ nextQuestion, answer: choice, questionHistory: updatedHistory });
+      questionMutation.mutate({ nextQuestion, answer, questionHistory: updatedHistory });
       setAnswer("");
     }
   }
@@ -94,16 +92,44 @@ function GetQuestions({ setWebState, worldTypes, setQuestionHistory, questionHis
       {question.question}
 
       {question.type === QuestionTypes.WordedMultipleChoice && question.choices.map((choice, index) => (
-        <button key={index} onClick={() => handleChoice(choice)}> {choice} </button>
+        <button 
+          className="worded-multiple-choice-buttons"
+          key={index} 
+          onClick={() => handleChoice(choice)}
+        > 
+          {choice} 
+        </button>
       ))}
 
-      {question.type === QuestionTypes.ScaleMultipleChoice && question.choices.map((choice, index) => (
-        <button key={index} onClick={() => handleChoice(choice)}> {choice} </button>
-      ))}
+      <div className="scale-multiple-choice-button-container">
+        {question.type === QuestionTypes.ScaleMultipleChoice && (
+          <>
+            <div className="scale-multiple-choice-axis">{question.leftSide}</div>
 
-      {question.type === QuestionTypes.YesOrNo && question.choices.map((choice, index) => (
-        <button key={index} onClick={() => handleChoice(choice)}> {choice} </button>
-      ))}
+            {question.choices.map((choice, index) => (
+              <button
+                key={index}
+                onClick={() => handleChoice(choice)}
+              >
+              </button>
+            ))}
+
+            <div className="scale-multiple-choice-axis">{question.rightSide}</div>
+          </>
+        )}
+      </div>
+
+      <div className="yes-or-no-button-container">
+        {question.type === QuestionTypes.YesOrNo && question.choices.map((choice, index) => (
+            <button 
+              className="yes-or-no-button"
+              key={index} 
+              onClick={() => handleChoice(choice)}
+            > 
+              {choice} 
+            </button>
+        ))}
+      </div>
 
       {question.type === QuestionTypes.OpenEnded && (
         <textarea

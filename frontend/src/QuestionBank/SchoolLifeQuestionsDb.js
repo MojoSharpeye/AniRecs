@@ -11,7 +11,7 @@ const schoolLifeQuestions = [
     }, 
     {
         type: QuestionTypes.OpenEnded,
-        question: "As you walk into the classroom, you realize the seating chart has changed. How do you respond to being moved away from your friends?"
+        question: "As you walk into the classroom, you realize the seating arrangement has changed. How do you respond to being moved away from your friends?"
     }, 
     {
         type: QuestionTypes.YesOrNo,
@@ -37,6 +37,8 @@ const schoolLifeQuestions = [
     {
         type: QuestionTypes.ScaleMultipleChoice,
         question: "You return home after. You ate dinner with your family and then went to bed. As you lay there, you think about the day. How confident are you in your choices?",
+        leftSide: "Not confident",
+        rightSide: "Very confident",
         choices: ["1", "2", "3", "4", "5"]
     }
 ];

@@ -16,14 +16,14 @@ function App() {
   
   return (
     <div className="apps-container">
-      {webState == WebStates.Choices && (
+      {webState === WebStates.Choices && (
         <QuestionBanktype
           setWorldType={setWorldTypes}
           setWebState={setWebState}
         />)
       }
 
-      {webState == WebStates.Questions && (
+      {webState === WebStates.Questions && (
         <GetQuestions 
           setWebState={setWebState}
           worldTypes={worldTypes}
@@ -32,7 +32,7 @@ function App() {
         />)
       }
 
-      {webState == WebStates.Personality && (
+      {webState === WebStates.Personality && (
         <GetPersonality 
           setWebState={setWebState}
           setPersonality={setPersonality}
@@ -40,7 +40,7 @@ function App() {
         />)
       }
 
-      {webState == WebStates.Recommendation && (<GetRecommendation personalityDescription={personality}/>)}
+      {webState === WebStates.Recommendation && (<GetRecommendation personalityDescription={personality}/>)}
     </div>
   )
 }
