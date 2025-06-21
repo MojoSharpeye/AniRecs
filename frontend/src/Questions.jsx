@@ -2,25 +2,31 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query"
 import fantasyQuestions from "./QuestionBank/FantasyQuestionsDb";
 import schoolLifeQuestions from "./QuestionBank/SchoolLifeQuestionsDb";
+import cyberpunkQuestions from "./QuestionBank/CyberpunkQuestionsDb";
 import { QuestionTypes, WebStates } from "./Enums";
 import "./Questions.css"
 
-function GetQuestions({ setWebState, questionType, setQuestionHistory, questionHistory }) {
+function GetQuestions({ setWebState, worldTypes, setQuestionHistory, questionHistory }) {
   let questionBank;
 
-  if (questionType == QuestionTypes.Fantasy) {
-    questionBank = fantasyQuestions;
-  } else if (questionType = QuestionTypes.SchoolLife) {
-    questionBank = schoolLifeQuestions;
-  }
+  // if (worldTypes == WorldTypes.Fantasy) {
+  //   questionBank = fantasyQuestions;
+  // } else if (worldTypes == WorldTypes.SchoolLife) {
+  //   questionBank = schoolLifeQuestions;
+  // } else if (worldTypes == WorldTypes.Cyberpunk) {
+  //   questionBank = cyberpunkQuestions;
+  // }
+
+  questionBank = schoolLifeQuestions;
 
   const [question, setQuestion] = useState(questionBank[0]);
   const [answer, setAnswer] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [progress, setProgress] = useState(1 / questionBank.length * 100);
+
+  const [progress, setProgress] = useState(0);
 
   const questionMutation = useMutation({
-    mutationFn: async ({nextQuestion, answer, questionHistory}) => {
+    mutationFn: async ({ nextQuestion, answer, questionHistory }) => {
       const res = await fetch("http://localhost:8080/quiz/question", {
         method: "POST",
         headers: {
@@ -37,56 +43,82 @@ function GetQuestions({ setWebState, questionType, setQuestionHistory, questionH
     },
 
     onSuccess: (data) => {
-      setQuestion(data);
+      setQuestion(prev => ({
+        ...prev,
+        question: data
+      }));
     }
   })
 
   const submit = (event) => {
-    if (event.key == "Enter" && answer.trim() !== "") {
+    if ((event.key == "Enter" && answer.trim() !== "")) {
       event.preventDefault();
-      const updatedHistory = [...questionHistory, { question, answer }];
-      setQuestionHistory(updatedHistory);
-
-      const nextQuestionIndex = questionIndex + 1;
-      setQuestionIndex(nextQuestionIndex);
-
-      // If its at the end of the question bank
-      // hide the question and show the personality
-      if (nextQuestionIndex >= questionBank.length) {
-        setWebState(WebStates.Personality);
-      } else {
-        const nextQuestion = questionBank[nextQuestionIndex];
-        
-        setProgress((nextQuestionIndex + 1) / questionBank.length * 100);
-        
-        questionMutation.mutate({ nextQuestion, answer, questionHistory: updatedHistory });
-        setAnswer("");
-      }
+      handleChoice(answer);
     }
   }
 
-  const textChange = event => {
+  const handleChoice = (choice) => {
+    const updatedHistory = [...questionHistory, { question: question.question, answer }];
+    setQuestionHistory(updatedHistory);
+
+    const nextQuestionIndex = questionIndex + 1;
+    setQuestionIndex(nextQuestionIndex);
+
+    // If its at the end of the question bank
+    // hide the question and show the personality
+    if (nextQuestionIndex >= questionBank.length) {
+      setWebState(WebStates.Personality);
+    } else {
+      setQuestion(questionBank[nextQuestionIndex]);
+
+      setProgress(nextQuestionIndex / questionBank.length * 100);
+      
+      const nextQuestion = questionBank[nextQuestionIndex].question;
+      console.log(nextQuestion);
+      console.log(choice);
+      questionMutation.mutate({ nextQuestion, answer: choice, questionHistory: updatedHistory });
+      setAnswer("");
+    }
+  }
+
+  const textBoxChange = (event) => {
     setAnswer(event.target.value);
+  }
+
+  if (questionMutation.isPending) {
+    return <div>Generating next question</div>;
   }
 
   return(
     <div className="questions-container">
-      {question}
+      {question.question}
 
-      <textarea
-        className="questions-textbox"
-        onChange={textChange} 
-        value = {answer}
-        onKeyDown={submit}
-        placeHolder="Input Text Here"
-        maxLength={280}
-      /> 
+      {question.type === QuestionTypes.WordedMultipleChoice && question.choices.map((choice, index) => (
+        <button key={index} onClick={() => handleChoice(choice)}> {choice} </button>
+      ))}
+
+      {question.type === QuestionTypes.ScaleMultipleChoice && question.choices.map((choice, index) => (
+        <button key={index} onClick={() => handleChoice(choice)}> {choice} </button>
+      ))}
+
+      {question.type === QuestionTypes.YesOrNo && question.choices.map((choice, index) => (
+        <button key={index} onClick={() => handleChoice(choice)}> {choice} </button>
+      ))}
+
+      {question.type === QuestionTypes.OpenEnded && (
+        <textarea
+          className="questions-textbox"
+          onChange={textBoxChange} 
+          value = {answer}
+          onKeyDown={submit}
+          placeholder="Input Text Here"
+          maxLength={280}
+        /> 
+      )}
 
       <div className="progress-bar">
         <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
       </div>
-
-      <button></button>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import QuestionBanktype from "./Path";
 import GetQuestions from "./Questions";
 import GetPersonality from "./Personality";
 import GetRecommendation from "./Recommendation";
-import { WebStates, QuestionTypes } from "./Enums";
+import { WebStates, WorldTypes } from "./Enums";
 import "./Apps.css"
 
 function App() {
@@ -12,13 +12,13 @@ function App() {
   const [personality, setPersonality] = useState("");
   const [questionHistory, setQuestionHistory] = useState([]);
   
-  const [questionType, setQuestionType] = useState(QuestionTypes.Fantasy);
+  const [worldTypes, setWorldTypes] = useState(WorldTypes.Fantasy);
   
   return (
     <div className="apps-container">
       {webState == WebStates.Choices && (
         <QuestionBanktype
-          setQuestionType={setQuestionType}
+          setWorldType={setWorldTypes}
           setWebState={setWebState}
         />)
       }
@@ -26,7 +26,7 @@ function App() {
       {webState == WebStates.Questions && (
         <GetQuestions 
           setWebState={setWebState}
-          questionType={questionType}
+          worldTypes={worldTypes}
           setQuestionHistory={setQuestionHistory}
           questionHistory={questionHistory}
         />)
