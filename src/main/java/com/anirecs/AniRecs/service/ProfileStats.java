@@ -54,7 +54,7 @@ public class ProfileStats {
         Set<String> edgelordUnwellGenres = new HashSet<>(Arrays.asList(
                 "Psychological", "Gore", "Survival", "CGDCT", "Otaku Culture", "Organized Crime", "Mahou Shoujo", "Idols(Female)", "Idols(Male)"));
         Set<String> shounenGenres = new HashSet<>(Arrays.asList(
-                "Shounen", "Action", "Sci-Fi", "Comedy", "Gag Humor", "Parody", "Samurai", "Mecha", "Super Power", "Combat Sports", "Sports",
+                "Shounen", "Action", "Sci-Fi", "Samurai", "Mecha", "Super Power", "Combat Sports", "Sports",
                 "Team Sports", "Martial Arts", "Racing", "Kids"));
         Set<String> fantasyGenres = new HashSet<>(Arrays.asList(
                 "Adventure", "Fantasy", "Vampire", "Mythology", "Urban Fantasy", "Reincarnation", "Isekai", "Villainess"));

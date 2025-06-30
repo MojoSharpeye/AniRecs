@@ -20,7 +20,8 @@ public class UserAnimeListService {
     // Creates a list of all watched anime
     public List<MalAnime> createUserAnimeList(String username) {
         List<MalAnime> animeList = new ArrayList<>();
-        String nextPageUrl = "https://api.myanimelist.net/v2/users/" + username + "/animelist?limit=1000&sort=list_score&fields=list_status{num_times_rewatched},average_episode_duration,nsfw=true";
+        String nextPageUrl = "https://api.myanimelist.net/v2/users/" + username +
+                "/animelist?limit=1000&sort=list_score&fields=list_status%7Bnum_times_rewatched%7D%2Caverage_episode_duration&nsfw=true";
 
         while (nextPageUrl != null) {
             JSONObject resultsJSONObj = getUserAnimeObject(nextPageUrl);
