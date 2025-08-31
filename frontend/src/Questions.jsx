@@ -88,64 +88,66 @@ function GetQuestions({ setWebState, worldTypes, setQuestionHistory, questionHis
   }
 
   return(
-    <div className="questions-container">
-      {question.question}
+    <>
+      <div className="questions-container">
+        {question.question}
 
-      {question.type === QuestionTypes.WordedMultipleChoice && question.choices.map((choice, index) => (
-        <button 
-          className="worded-multiple-choice-buttons"
-          key={index} 
-          onClick={() => handleChoice(choice)}
-        > 
-          {choice} 
-        </button>
-      ))}
+        {question.type === QuestionTypes.WordedMultipleChoice && question.choices.map((choice, index) => (
+          <button 
+            className="worded-multiple-choice-buttons"
+            key={index} 
+            onClick={() => handleChoice(choice)}
+          > 
+            {choice} 
+          </button>
+        ))}
 
-      <div className="scale-multiple-choice-button-container">
-        {question.type === QuestionTypes.ScaleMultipleChoice && (
-          <>
-            <div className="scale-multiple-choice-axis">{question.leftSide}</div>
+        <div className="scale-multiple-choice-button-container">
+          {question.type === QuestionTypes.ScaleMultipleChoice && (
+            <>
+              <div className="scale-multiple-choice-axis">{question.leftSide}</div>
 
-            {question.choices.map((choice, index) => (
-              <button
-                key={index}
+              {question.choices.map((choice, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleChoice(choice)}
+                >
+                </button>
+              ))}
+
+              <div className="scale-multiple-choice-axis">{question.rightSide}</div>
+            </>
+          )}
+        </div>
+
+        <div className="yes-or-no-button-container">
+          {question.type === QuestionTypes.YesOrNo && question.choices.map((choice, index) => (
+              <button 
+                className="yes-or-no-button"
+                key={index} 
                 onClick={() => handleChoice(choice)}
-              >
+              > 
+                {choice} 
               </button>
-            ))}
+          ))}
+        </div>
 
-            <div className="scale-multiple-choice-axis">{question.rightSide}</div>
-          </>
+        {question.type === QuestionTypes.OpenEnded && (
+          <textarea
+            className="questions-textbox"
+            onChange={textBoxChange} 
+            value = {answer}
+            onKeyDown={submit}
+            placeholder="Input Text Here"
+            maxLength={280}
+          /> 
         )}
       </div>
-
-      <div className="yes-or-no-button-container">
-        {question.type === QuestionTypes.YesOrNo && question.choices.map((choice, index) => (
-            <button 
-              className="yes-or-no-button"
-              key={index} 
-              onClick={() => handleChoice(choice)}
-            > 
-              {choice} 
-            </button>
-        ))}
-      </div>
-
-      {question.type === QuestionTypes.OpenEnded && (
-        <textarea
-          className="questions-textbox"
-          onChange={textBoxChange} 
-          value = {answer}
-          onKeyDown={submit}
-          placeholder="Input Text Here"
-          maxLength={280}
-        /> 
-      )}
 
       <div className="progress-bar">
         <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
       </div>
-    </div>
+    </>
   );
 }
 
