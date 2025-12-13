@@ -1,0 +1,53 @@
+.frontpage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 15vh;
+  min-height: 100vh;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.frontpage-AniRecslogo {
+  width: 100px;
+  height: auto;
+  max-width: 90vw;
+  transition: filter 0.35s ease;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  margin: 0;
+  z-index: 2;
+}
+
+.frontpage-AniRecslogo:hover {
+  filter: invert(1);
+}
+
+.start-button {
+  position: relative;
+  padding: 0.5em 1em;
+  font-size: 1.5em;
+  color: #fff;
+  background-color: #000000;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+  Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+  Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 200%;
+  font-weight: 900;
+  margin-top: 48vh;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.start-button:hover {
+  filter: invert(1);
+}
