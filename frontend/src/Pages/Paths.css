@@ -1,0 +1,362 @@
+.Paths-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  height: 100vh;
+  user-select: none;
+}
+
+/* Button 1 (QUIZ) */
+
+.btnz {
+  display: block;
+  padding: 12em 7em;
+  background: transparent;
+  outline: none;
+  border: 0;
+  color: #d4af37;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.cubez {
+  position: relative;
+  transition: all 0.5s;
+}
+
+.cubez .bg-top {
+  position: absolute;
+  height: 10px;
+  background: #d4af37;
+  bottom: 100%;
+  left: 5px;
+  right: -5px;
+  transform: skew(-45deg, 0);
+  margin: 0;
+  transition: all 0.4s;
+}
+
+.cubez .bg-top .bg-inner {
+  bottom: 0;
+}
+
+.cubez .bg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  background: #d4af37;
+  transition: all 0.4s;
+}
+
+.cubez .bg-right {
+  position: absolute;
+  background: #d4af37;
+  top: -5px;
+  z-index: 0;
+  bottom: 5px;
+  width: 10px;
+  left: 100%;
+  transform: skew(0, -45deg);
+  transition: all 0.4s;
+}
+
+.cubez .bg-right .bg-inner {
+  left: 0;
+}
+
+.cubez .bg-inner {
+  background: #28282d;
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  background-image: url(../assets/fantasybg2.jpg);
+  background-size: cover;
+}
+
+.cubez .text {
+  position: relative;
+  transition: all 0.4s;
+  
+}
+
+.cubez:hover .bg-inner {
+  background: #d4af37;
+  transition: all 1s;
+}
+
+.cubez:hover .text {
+  color: #28282d;
+  transition: all 1s;
+}
+
+.cubez:hover .bg-right,
+.cubez:hover .bg,
+.cubez:hover .bg-top {
+  background: #28282d;
+}
+
+.cubez:active {
+  z-index: 9999;
+  animation: bounce 0.7s linear;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+/* Button 2 */
+
+.btnz2 {
+  display: block;
+  padding: 12em 7em;
+  background: transparent;
+  outline: none;
+  border: 0;
+  color: #d4af37;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.btnz2 {
+  position: relative;
+  transition: all 0.5s;
+}
+
+.cubez2 .bg-top {
+  position: absolute;
+  height: 10px;
+  background: #d4af37;
+  bottom: 100%;
+  left: 5px;
+  right: -5px;
+  transform: skew(-45deg, 0);
+  margin: 0;
+  transition: all 0.4s;
+}
+
+.cubez2 .bg-top .bg-inner {
+  bottom: 0;
+}
+
+.cubez2 .bg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  background: #d4af37;
+  transition: all 0.4s;
+}
+
+.cubez2 .bg-right {
+  position: absolute;
+  background: #d4af37;
+  top: -5px;
+  z-index: 0;
+  bottom: 5px;
+  width: 10px;
+  left: 100%;
+  transform: skew(0, -45deg);
+  transition: all 0.4s;
+}
+
+.cubez2 .bg-right .bg-inner {
+  left: 0;
+}
+
+.cubez2 .bg-inner {
+  background: #28282d;
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  background-image: url(../assets/schoolbg2.jpg);
+  background-size: cover;
+}
+
+.cubez2 .text {
+  position: relative;
+  transition: all 0.4s;
+}
+
+.cubez2:hover .bg-inner {
+  background: #d4af37;
+  transition: all 1s;
+}
+
+.cubez2:hover .text {
+  color: #28282d;
+  transition: all 1s;
+}
+
+.cubez2:hover .bg-right,
+.cubez2:hover .bg,
+.cubez2:hover .bg-top {
+  background: #28282d;
+}
+
+.cubez2:active {
+  z-index: 9999;
+  animation: bounce 0.1s linear;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(0.9);
+  }
+}
+.cubez2:hover .bg,
+.cubez2:hover .bg-top {
+  background: #28282d;
+}
+
+.cubez2:active {
+  z-index: 9999;
+  animation: bounce 0.7s linear;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+
+/* Button 3 (MAL) */
+
+.btnz3 {
+  display: block;
+  padding: 12em 7em;
+  background: transparent;
+  outline: none;
+  border: 0;
+  color: #d4af37;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.btnz3 {
+  position: relative;
+  transition: all 0.5s;
+}
+
+.cubez3 .bg-top {
+  position: absolute;
+  height: 10px;
+  background: #d4af37;
+  bottom: 100%;
+  left: 5px;
+  right: -5px;
+  transform: skew(-45deg, 0);
+  margin: 0;
+  transition: all 0.4s;
+}
+
+.cubez3 .bg-top .bg-inner {
+  bottom: 0;
+}
+
+.cubez3 .bg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  background: #d4af37;
+  transition: all 0.4s;
+}
+
+.cubez3 .bg-right {
+  position: absolute;
+  background: #d4af37;
+  top: -5px;
+  z-index: 0;
+  bottom: 5px;
+  width: 10px;
+  left: 100%;
+  transform: skew(0, -45deg);
+  transition: all 0.4s;
+}
+
+.cubez3 .bg-right .bg-inner {
+  left: 0;
+}
+
+.cubez3 .bg-inner {
+  background: #28282d;
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  background-image: url(../assets/cyberbg2.jpg);
+  background-size: cover;
+}
+
+.cubez3 .text {
+  position: relative;
+  transition: all 0.4s;
+}
+
+.cubez3:hover .bg-inner {
+  background: #d4af37;
+  transition: all 1s;
+}
+
+.cubez3:hover .text {
+  color: #28282d;
+  transition: all 1s;
+}
+
+.cubez3:hover .bg-right,
+.cubez3:hover .bg,
+.cubez3:hover .bg-top {
+  background: #28282d;
+}
+
+.cubez3:active {
+  z-index: 9999;
+  animation: bounce 0.1s linear;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(0.9);
+  }
+}
+.cubez3:hover .bg,
+.cubez3:hover .bg-top {
+  background: #28282d;
+}
+
+.cubez3:active {
+  z-index: 9999;
+  animation: bounce 0.7s linear;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(0.9);
+  }
+}
+

@@ -13,10 +13,8 @@
     --color-link-hover: #fff;
     --color-title: #ffffff;
 	--color-subtitle: #0f2e5c;
-}
-
-.demo-2:hover {
-  filter: invert(1);
+	-webkit-filter: invert(1);
+	filter: invert(1);
 }
 
 .content__title {
@@ -28,6 +26,7 @@
 	text-transform: uppercase;
 	letter-spacing: 0.15em;
 	font-family: 'nexa_boldregular', sans-serif;
+	transition: filter 0.35s ease;
 }
 
 .content__title:hover {

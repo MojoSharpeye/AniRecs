@@ -1,28 +1,27 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query"
-import fantasyQuestions from "./QuestionBank/FantasyQuestionsDb";
-import schoolLifeQuestions from "./QuestionBank/SchoolLifeQuestionsDb";
-import cyberpunkQuestions from "./QuestionBank/CyberpunkQuestionsDb";
-import { QuestionTypes, WebStates } from "./Enums";
+import fantasyQuestions from "../QuestionBank/FantasyQuestionsDb";
+import schoolLifeQuestions from "../QuestionBank/SchoolLifeQuestionsDb";
+import cyberpunkQuestions from "../QuestionBank/CyberpunkQuestionsDb";
+import { QuestionTypes, WebStates } from "../Enums";
 import "./Questions.css"
 
 function GetQuestions({ setWebState, worldTypes, setQuestionHistory, questionHistory }) {
   let questionBank;
 
-  // if (worldTypes == WorldTypes.Fantasy) {
-  //   questionBank = fantasyQuestions;
-  // } else if (worldTypes == WorldTypes.SchoolLife) {
-  //   questionBank = schoolLifeQuestions;
-  // } else if (worldTypes == WorldTypes.Cyberpunk) {
-  //   questionBank = cyberpunkQuestions;
-  // }
+      // if (worldTypes == WorldTypes.Fantasy) {
+      //   questionBank = fantasyQuestions;
+      // } else if (worldTypes == WorldTypes.SchoolLife) {
+      //   questionBank = schoolLifeQuestions;
+      // } else if (worldTypes == WorldTypes.Cyberpunk) {
+      //   questionBank = cyberpunkQuestions;
+      // }
 
   questionBank = schoolLifeQuestions;
 
   const [question, setQuestion] = useState(questionBank[0]);
   const [answer, setAnswer] = useState("");
   const [questionIndex, setQuestionIndex] = useState(0);
-
   const [progress, setProgress] = useState(0);
 
   const questionMutation = useMutation({

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import QuestionBanktype from "./Path";
-import GetQuestions from "./Questions";
+import GetQuestions from "./Pages/Questions";
 import GetPersonality from "./Personality";
 import GetRecommendation from "./Recommendation";
 import { WebStates, WorldTypes } from "./Enums";
