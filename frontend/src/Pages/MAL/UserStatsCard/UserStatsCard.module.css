@@ -1,0 +1,9 @@
+.card{
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* stack children vertically */
+    justify-content: center; /* vertical centering */
+    align-items: center; /* horizontal centering */
+    text-align: center;
+    min-height: 85vh;
+}

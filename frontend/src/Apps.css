@@ -1,13 +1,27 @@
 body {
-    background-color: rgb(20, 20, 20);
-    color: aliceblue;
-    
-    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+  background-color: rgb(20, 20, 20);
+  color: aliceblue;
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .apps-container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Prevent text selection */
+* {
+  -webkit-user-select: none; /* For Safari */
+  -moz-user-select: none; /* For Firefox */
+  -ms-user-select: none; /* For Internet Explorer */
+  user-select: none; /* Standard syntax */
+}
+
+/* Prevent images from being draggable */
+img {
+  -webkit-user-drag: none; /* For Safari */
+  user-drag: none; /* Standard syntax */
 }

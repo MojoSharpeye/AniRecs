@@ -1,0 +1,189 @@
+.cardContainer {
+  width: 320px;
+  height: 550px;
+  perspective: 1000px;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  border-radius: 40px;
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 40px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(99, 38, 134);
+  color: white;
+  padding: 13px;
+  box-sizing: border-box;
+}
+
+.cardFront {
+  width: 100%;
+  height: 100%;
+  border-radius: 40px;
+  background-color: rgb(99, 38, 134);
+  padding: 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.cardFront img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 28px;
+  display: block;
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+  justify-content: center;
+}
+
+.cardFront h3 {
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 1.2em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+}
+
+.stats {
+  margin-left: 10px;
+  border-top: 1px solid white;
+  text-align: left;
+}
+
+.cardContainer:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+.cardInner:hover {
+  box-shadow: 0 0 20px rgba(255, 178, 12, 0.103);
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+  z-index: 999;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background-color: white;
+  color: black;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 1000px;
+  width: fit-content;
+  animation: zoomIn 0.4s ease;
+  text-align: left;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  gap: 30px;
+}
+
+.modalContent img {
+  max-width: 250px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.modalContent button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #631f8a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.synopsis {
+  max-height: 13em;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.synopsis::-webkit-scrollbar {
+  width: 8px;
+}
+
+.synopsis::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 3px;
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 300px;
+}
+
+.stats {
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+.stats p {
+  margin: 4px 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

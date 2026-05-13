@@ -1,0 +1,93 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.button {
+  width: 80px;
+  height: auto;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.button:hover {
+  box-shadow: 0 0 0 6px rgb(255, 241, 41);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.selected {
+  box-shadow: 0 0 0 6px rgb(255, 241, 41);
+}
+
+.content {
+  margin-left: 200px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 40%;
+}
+
+.rectangleDiv {
+  width: 520px;
+  height: 300px;
+  background-color: #ddd;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.personality {
+  font-size: 60px;
+  margin: 0px;
+}
+
+.description {
+  font-size: 18px;
+  width: 60%;
+  margin: 9px;
+}
+
+.recommendationButton {
+  width: 45%;
+  font-weight: bolder;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(255, 255, 255);
+  background-color: rgb(99, 38, 134);
+  border-radius: 25px;
+  border-width: 0px;
+  padding: 17px 28px;
+  margin: 24px 0px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.recommendationButton:hover {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  cursor: pointer;
+}

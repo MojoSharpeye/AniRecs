@@ -1,0 +1,23 @@
+.error{
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    height: 100%; /* Make the div take full viewport height */
+    margin-top: 100px;
+}
+
+.list{
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;     /* Align items to the left */
+}
+
+.img{
+    width: 350px;
+    height: auto;
+}

@@ -1,0 +1,160 @@
+.fullscreen {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.animesection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 16px;
+  margin: 0 auto;
+}
+
+.greeting {
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 85vh;
+}
+
+.favourites {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center AnimeCard horizontally */
+  justify-content: center; /* (optional) vertically center if parent allows */
+  text-align: center; /* Center the heading */
+  gap: 20px; /* Space between title and card */
+  margin-top: 40px; /* Space above the whole section */
+}
+
+.fade-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+@keyframes flash {
+  0% {
+    color: rgb(109, 109, 109);
+  }
+  50% {
+    color: rgba(109, 109, 109, 0.185);
+  }
+  100% {
+    color: rgb(109, 109, 109);
+  }
+}
+
+.prompt {
+  margin-top: 70px;
+  animation: flash 2s infinite;
+}
+
+@keyframes bob {
+  0% {
+    color: rgb(255, 255, 255);
+    transform: translateY(0);
+  }
+  50% {
+    color: rgba(255, 255, 255, 0.466);
+    transform: translateY(-10px);
+  }
+  100% {
+    color: rgb(255, 255, 255);
+    transform: translateY(0);
+  }
+}
+
+.scrollButton {
+  width: 100%;
+  font-size: xx-large;
+  font-weight: 900;
+  color: white;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  animation: bob 2s infinite;
+}
+
+.scrollButton:focus {
+  outline: none;
+}
+
+.scrollContainer {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.snapSection {
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #aaa;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.activeDot {
+  height: 100px;
+  border-radius: 50px;
+}

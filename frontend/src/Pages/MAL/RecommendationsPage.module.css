@@ -1,0 +1,31 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 16px;
+}
+
+.heading {
+  padding: 80px;
+  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+}
+
+@keyframes flash {
+  0% {
+    color: rgba(24, 24, 24, 0.61);
+  }
+  50% {
+    color: rgb(0, 0, 0);
+  }
+  100% {
+    color: rgba(24, 24, 24, 0.61);
+  }
+}
+
+.prompt {
+  text-align: center;
+  margin-top: 70px;
+  animation: flash 2s infinite;
+}

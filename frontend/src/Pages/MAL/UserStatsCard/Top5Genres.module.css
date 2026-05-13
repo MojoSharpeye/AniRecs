@@ -1,0 +1,27 @@
+.topGenres{
+    margin: 0px;
+    display: flex;
+    flex-direction: column; /* stack children vertically */
+    justify-content: center; /* vertical centering */
+    align-items: center; /* horizontal centering */
+    text-align: center;
+    min-height: 85vh;
+}
+
+.topGenres h1 {
+    margin: 0px;
+}
+
+.genre{
+    text-align: left;
+}
+
+.genre li {
+    margin: 30px;
+    font-size: 24px;
+}
+
+.genre li::marker{
+    font-weight: bold;
+    font-size: 30px;
+}
